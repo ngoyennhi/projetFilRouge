@@ -17,17 +17,17 @@ public class MyConnexion {
 	public static void main(String[] args) {
 		openConnection();
 		testConnection();
-		closeConnection();
+		//closeConnection();
 	}
 	/**
-	 * Connection to my crudDRAGON database Opening the connection
+	 * Connection to my projetFilRouge database Opening the connection
 	 * 
 	 * @throws SQLException
 	 */
 	public static void openConnection() {
 		/* Connection parameters*/
 	//  //for window
-	//  String url = "jdbc:mysql://127.0.0.1/crudDRAGON";
+	//  String url = "jdbc:mysql://127.0.0.1/projetFilRouge";
 	//  // crudDRAGON = name of database
 	//  String utilisateur = "root";
 	//  String motDePasse = "";

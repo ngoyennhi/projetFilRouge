@@ -28,7 +28,13 @@ public class LoginDialog extends JDialog {
 	    private boolean succeeded;
     public LoginDialog(Frame parent) {
         super(parent, "Login", true);
-        //
+        
+        /**
+         * A dialog to configure database connection information.
+        This is a dialog box allowing you to enter the two pieces of information necessary for a JDBC connection:
+      the login and password.
+         */
+        
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints cs = new GridBagConstraints();
 
@@ -71,6 +77,8 @@ public class LoginDialog extends JDialog {
                             JOptionPane.INFORMATION_MESSAGE);
                     succeeded = true;
                     dispose();
+                    // connection DB localhost
+                    MyConnexion.openConnection();
                 } else {
                     JOptionPane.showMessageDialog(LoginDialog.this,
                             "Invalid username or password",

@@ -86,28 +86,6 @@ public class NestiStockJava {
                     }
                 });
 		
-		//Une boite de dialogue pour configurer les informations de connexion à la base de données.
-
-//		//Il s'agit d'une boîte de dialogue permettant de saisir les deux informations nécessaires à une connexion JDBC : 
-//		//le login et le mot de passe.
-//		JLayeredPane dialogue_conn = new JLayeredPane();
-//		dialogue_conn.setForeground(Color.WHITE);
-//		dialogue_conn.setBackground(Color.WHITE);
-//		dialogue_conn.setBounds(106, 218, 606, 302);
-//		frame.getContentPane().add(dialogue_conn);
-//		dialogue_conn.setLayout(null);
-//		
-//		JLabel dialogue_cnn_label = new JLabel("Connexion Base de Donnée");
-//		dialogue_cnn_label.setBounds(0, 0, 500, 50);
-//		dialogue_cnn_label.setVerticalAlignment(SwingConstants.CENTER);
-//		dialogue_cnn_label.setHorizontalAlignment(SwingConstants.CENTER);
-//		dialogue_cnn_label.setHorizontalTextPosition(SwingConstants.CENTER); //set text CENTER 
-//		dialogue_cnn_label.setVerticalTextPosition(SwingConstants.CENTER); //set text TOP 
-//		dialogue_cnn_label.setForeground(new Color(0xCDC9C9));
-//		dialogue_cnn_label.setBackground(new Color(0, 86, 98));;	
-//		dialogue_cnn_label.setOpaque(true); //display background color
-//		dialogue_cnn_label.setFont(new Font("Rockwell", Font.BOLD, 20));
-//		dialogue_conn.add(dialogue_cnn_label);
 
 	}
 }
