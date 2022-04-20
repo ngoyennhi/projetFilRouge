@@ -16,6 +16,7 @@ import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
 public class NestiStockJava {
 
@@ -88,55 +89,75 @@ public class NestiStockJava {
                 });
 		
 			/**
-			 * Grid of 3 btn OPTIONS 
+			 * Tab Menu
 			 */
-		JPanel panel_centre = new JPanel();
-		panel_centre.setBounds(65, 294, 663, 206);
-		frame.getContentPane().add(panel_centre);
-		panel_centre.setBackground(new Color(0, 128, 128));
-		panel_centre.setLayout(null);
 		
-		/**
-		 * btn Fournisseurs
-		 */
-		JButton btnFournisseurs = new JButton("Fournisseurs");
-		btnFournisseurs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnFournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-		btnFournisseurs.setForeground(new Color(0, 128, 128));
-		btnFournisseurs.setBackground(new Color(192, 192, 192));
-		btnFournisseurs.setBounds(224, 60, 206, 72);
-		panel_centre.add(btnFournisseurs);
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(new Color(128, 128, 128));
+		tabbedPane.setBounds(0, 79, 800, 693);
+		frame.getContentPane().add(tabbedPane);
 		
-		/**
-		 * btn Produits
-		 */
-		JButton btnProduits = new JButton("Produits");
-		btnProduits.setForeground(new Color(0, 128, 128));
-		btnProduits.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-		btnProduits.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnProduits.setBackground(Color.LIGHT_GRAY);
-		btnProduits.setBounds(6, 60, 206, 72);
-		panel_centre.add(btnProduits);
+		JPanel panelProduits = new JPanel();
+		tabbedPane.addTab("Produits", null, panelProduits, "CRUD Produits");
 		
-		/**
-		 * btn Commandes
-		 */
-		JButton btnCommandes = new JButton("Commandes");
-		btnCommandes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnCommandes.setForeground(new Color(0, 128, 128));
-		btnCommandes.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-		btnCommandes.setBackground(Color.LIGHT_GRAY);
-		btnCommandes.setBounds(442, 60, 206, 72);
-		panel_centre.add(btnCommandes);
+		JPanel panelFournisseurs = new JPanel();
+		tabbedPane.addTab("Fournisseurs", null, panelFournisseurs, "CRUD Fournisseurs");
+		
+		JPanel panelCommandes = new JPanel();
+		tabbedPane.addTab("Commandes", null, panelCommandes, "CRUD Commandes");
+		
+//		/**
+//		 * Grid of 3 btn OPTIONS 
+//		 */
+//	
+//		JPanel panel_centre = new JPanel();
+//		panel_centre.setBounds(65, 294, 663, 206);
+//		frame.getContentPane().add(panel_centre);
+//		panel_centre.setBackground(new Color(0, 128, 128));
+//		panel_centre.setLayout(null);
+//		
+//		/**
+//		 * btn Fournisseurs
+//		 */
+//		JButton btnFournisseurs = new JButton("Fournisseurs");
+//		btnFournisseurs.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			}
+//		});
+//		btnFournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+//		btnFournisseurs.setForeground(new Color(0, 128, 128));
+//		btnFournisseurs.setBackground(new Color(192, 192, 192));
+//		btnFournisseurs.setBounds(224, 60, 206, 72);
+//		panel_centre.add(btnFournisseurs);
+//		
+//		/**
+//		 * btn Produits
+//		 */
+//		JButton btnProduits = new JButton("Produits");
+//		btnProduits.setForeground(new Color(0, 128, 128));
+//		btnProduits.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+//		btnProduits.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//
+//			}
+//		});
+//		btnProduits.setBackground(Color.LIGHT_GRAY);
+//		btnProduits.setBounds(6, 60, 206, 72);
+//		panel_centre.add(btnProduits);
+//		
+//		/**
+//		 * btn Commandes
+//		 */
+//		JButton btnCommandes = new JButton("Commandes");
+//		btnCommandes.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			}
+//		});
+//		btnCommandes.setForeground(new Color(0, 128, 128));
+//		btnCommandes.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+//		btnCommandes.setBackground(Color.LIGHT_GRAY);
+//		btnCommandes.setBounds(442, 60, 206, 72);
+//		panel_centre.add(btnCommandes);
 	
 		
 
