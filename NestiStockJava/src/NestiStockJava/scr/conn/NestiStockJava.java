@@ -130,6 +130,16 @@ public class NestiStockJava {
 		panelRecherche.setBackground(new Color(255, 255, 255));
 		panelRecherche.setBounds(411, 56, 351, 45);
 		panelProduits.add(panelRecherche);
+		panelRecherche.setLayout(null);
+		
+		JButton btnProduitRecherche = new JButton("Recherche");
+		btnProduitRecherche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnProduitRecherche.setBounds(237, 6, 108, 29);
+		btnProduitRecherche.setBackground(new Color(255, 228, 225));
+		panelRecherche.add(btnProduitRecherche);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
@@ -140,6 +150,30 @@ public class NestiStockJava {
 		listeArticle.setFont(new Font("Ubuntu", Font.PLAIN, 20));
 		listeArticle.setBounds(411, 112, 352, 38);
 		panelProduits.add(listeArticle);
+		
+		JButton btnProduitCreer = new JButton("Creer");
+		btnProduitCreer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnProduitCreer.setBackground(new Color(255, 228, 225));
+		btnProduitCreer.setBounds(24, 567, 121, 45);
+		panelProduits.add(btnProduitCreer);
+		
+		JButton btnProduitModifier = new JButton("Modifier");
+		btnProduitModifier.setBackground(new Color(255, 228, 225));
+		btnProduitModifier.setBounds(157, 567, 129, 45);
+		panelProduits.add(btnProduitModifier);
+		
+		JButton btnProduitSupprimer = new JButton("Supprimer");
+		btnProduitSupprimer.setBackground(new Color(255, 228, 225));
+		btnProduitSupprimer.setBounds(295, 567, 129, 45);
+		panelProduits.add(btnProduitSupprimer);
+		
+		JButton btnProduitMisAJours = new JButton("Mis à jours");
+		btnProduitMisAJours.setBackground(new Color(255, 228, 225));
+		btnProduitMisAJours.setBounds(526, 567, 129, 45);
+		panelProduits.add(btnProduitMisAJours);
 		
 		JPanel panelFournisseurs = new JPanel();
 		tabbedPane.addTab("Fournisseurs", null, panelFournisseurs, "CRUD Fournisseurs");
