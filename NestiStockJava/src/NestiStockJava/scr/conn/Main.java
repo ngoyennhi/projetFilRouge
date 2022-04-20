@@ -16,6 +16,7 @@ public class Main {
 		frame.setResizable(false); // prevent frame from being resized
 		frame.setVisible(true); // make frame visible
 		frame.setSize(800,800); // sets the x-dimension, and  y-dimension of frame
-		}
+		frame.getContentPane().setBackground(new Color(205, 201, 201)); // change color of background	
+	}
 
 }
