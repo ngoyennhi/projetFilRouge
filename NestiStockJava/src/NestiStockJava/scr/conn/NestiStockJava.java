@@ -55,12 +55,13 @@ public class NestiStockJava {
 	 * Méthode initialize qui est applelé dans le constructeur
 	 */
 	private void initialize() {
+		
 		frame = new MyFrame(); //modify classe MyFrame.java if you want
 		
 		/**
 		 * btn login - logout
 		 */
-		JButton btnLogin = new JButton("Login ");
+		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(598, 85, 104, 29);
 		frame.getContentPane().add(btnLogin);
 		btnLogin.addActionListener(
@@ -75,16 +76,68 @@ public class NestiStockJava {
                     }
                 });
 		
-		JButton btnLogout = new JButton("Logout ");
+		JButton btnLogout = new JButton("Logout");
 		btnLogout.setBounds(694, 85, 97, 29);
 		frame.getContentPane().add(btnLogout);
-		btnLogout.addActionListener(
+			btnLogout.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e) {
                     	//This just terminates the program.
                     	System.exit(0);
                     }
                 });
+		
+			/**
+			 * Grid of 3 btn OPTIONS 
+			 */
+		JPanel panel_centre = new JPanel();
+		panel_centre.setBounds(65, 294, 663, 206);
+		frame.getContentPane().add(panel_centre);
+		panel_centre.setBackground(new Color(0, 128, 128));
+		panel_centre.setLayout(null);
+		
+		/**
+		 * btn Fournisseurs
+		 */
+		JButton btnFournisseurs = new JButton("Fournisseurs");
+		btnFournisseurs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnFournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		btnFournisseurs.setForeground(new Color(0, 128, 128));
+		btnFournisseurs.setBackground(new Color(192, 192, 192));
+		btnFournisseurs.setBounds(224, 60, 206, 72);
+		panel_centre.add(btnFournisseurs);
+		
+		/**
+		 * btn Produits
+		 */
+		JButton btnProduits = new JButton("Produits");
+		btnProduits.setForeground(new Color(0, 128, 128));
+		btnProduits.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		btnProduits.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnProduits.setBackground(Color.LIGHT_GRAY);
+		btnProduits.setBounds(6, 60, 206, 72);
+		panel_centre.add(btnProduits);
+		
+		/**
+		 * btn Commandes
+		 */
+		JButton btnCommandes = new JButton("Commandes");
+		btnCommandes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCommandes.setForeground(new Color(0, 128, 128));
+		btnCommandes.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		btnCommandes.setBackground(Color.LIGHT_GRAY);
+		btnCommandes.setBounds(442, 60, 206, 72);
+		panel_centre.add(btnCommandes);
+	
 		
 
 	}
