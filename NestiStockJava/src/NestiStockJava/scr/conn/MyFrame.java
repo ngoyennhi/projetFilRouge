@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-//Jthis is parent of Mythis
+//Jframe is parent of MyFrame
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame {
 	//Construction 
@@ -20,7 +20,7 @@ public class MyFrame extends JFrame {
 //	this.getContentPane().setBackground(new Color(0xCDC9C9)); // change color of background
 	
 	JLabel label = new JLabel();
-	label.setBounds(0, 0, 800, 90);
+	label.setBounds(0, 0, 800, 80);
 	label.setVerticalAlignment(SwingConstants.CENTER);
 	label.setHorizontalAlignment(SwingConstants.CENTER);
 	label.setText("GESTION DE STOCK NESTI"); //set text of label
@@ -40,6 +40,7 @@ public class MyFrame extends JFrame {
 	this.getContentPane().setBackground(new Color(0xCDC9C9)); // change color of background
 	this.getContentPane().setLayout(null);
 	this.getContentPane().add(label);
-	//this.pack(); // to get all together after ADD all COMPONENTS - resize together 
+	
+	
 }
 }
