@@ -99,6 +99,32 @@ public class NestiStockJava {
 		
 		JPanel panelProduits = new JPanel();
 		tabbedPane.addTab("Produits", null, panelProduits, "CRUD Produits");
+		panelProduits.setLayout(null);
+		
+		JLabel produitLabel = new JLabel("Cet onglet permet de renseigner des articles/ des utensiles");
+		produitLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		produitLabel.setBounds(24, 6, 602, 38);
+		panelProduits.add(produitLabel);
+		
+		JPanel panelProduitsSaisir = new JPanel();
+		panelProduitsSaisir.setBackground(new Color(255, 255, 255));
+		panelProduitsSaisir.setBounds(22, 56, 377, 477);
+		panelProduits.add(panelProduitsSaisir);
+		
+		JPanel panelRecherche = new JPanel();
+		panelRecherche.setBackground(new Color(255, 255, 255));
+		panelRecherche.setBounds(411, 56, 351, 45);
+		panelProduits.add(panelRecherche);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
+		panel.setBounds(407, 152, 355, 382);
+		panelProduits.add(panel);
+		
+		JLabel listeArticle = new JLabel("Liste d'articles");
+		listeArticle.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		listeArticle.setBounds(411, 112, 352, 38);
+		panelProduits.add(listeArticle);
 		
 		JPanel panelFournisseurs = new JPanel();
 		tabbedPane.addTab("Fournisseurs", null, panelFournisseurs, "CRUD Fournisseurs");
