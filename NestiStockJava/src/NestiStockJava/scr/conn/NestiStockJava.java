@@ -110,6 +110,21 @@ public class NestiStockJava {
 		panelProduitsSaisir.setBackground(new Color(255, 255, 255));
 		panelProduitsSaisir.setBounds(22, 56, 377, 477);
 		panelProduits.add(panelProduitsSaisir);
+		panelProduitsSaisir.setLayout(null);
+		
+		JButton btnProduitSubmit = new JButton("Submit");
+		btnProduitSubmit.setBackground(new Color(255, 228, 225));
+		btnProduitSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnProduitSubmit.setBounds(49, 430, 117, 29);
+		panelProduitsSaisir.add(btnProduitSubmit);
+		
+		JButton btnProduitEffacer = new JButton("Effacer");
+		btnProduitEffacer.setBackground(new Color(255, 228, 225));
+		btnProduitEffacer.setBounds(201, 430, 117, 29);
+		panelProduitsSaisir.add(btnProduitEffacer);
 		
 		JPanel panelRecherche = new JPanel();
 		panelRecherche.setBackground(new Color(255, 255, 255));
