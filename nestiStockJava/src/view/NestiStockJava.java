@@ -26,10 +26,27 @@ import javax.swing.JTabbedPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import java.awt.SystemColor;
+import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 
 public class NestiStockJava {
 
 	private JFrame frame;
+	private JTextField produitNomText;
+	private JTextField produitEtatText;
+	private JTextField produitDateCreationText;
+	private JTextField produitDateConsomText;
+	private JTextField produitMarqueText;
+	private JTextField produitFournisseurText;
+	private JTable tableListArticle;
+	private JTextField produitSaisirTextRecherche;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
 
 	/**
 	 * Launch the application.
@@ -64,7 +81,7 @@ public class NestiStockJava {
 	 * 
 	 * Méthode initialize qui est applelé dans le constructeur
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	
 	private void initialize() {
 		
 		frame = new MyFrame(); //modify class MyFrame.java if you want
@@ -110,18 +127,18 @@ public class NestiStockJava {
 		btnProduitEffacer.setBounds(201, 430, 117, 29);
 		panelProduitsSaisir.add(btnProduitEffacer);
 		
-		
-		//**************************************************//
-		// Label Type
-		JLabel produitTypeLabel = new JLabel("Type");
-		produitTypeLabel.setBounds(19, 27, 61, 16);
-		panelProduitsSaisir.add(produitTypeLabel);
-		// List of product types 
-        String s1_TypeProduits[] = {"Article", "Utensile"}; 
-		JComboBox produitTypeComboBox = new JComboBox(s1_TypeProduits);
-		produitTypeComboBox.setBounds(154, 23, 217, 30);
-		panelProduitsSaisir.add(produitTypeComboBox);
-		//**************************************************//
+//		
+//		//**************************************************//
+//		// Label Type
+//		JLabel produitTypeLabel = new JLabel("Type");
+//		produitTypeLabel.setBounds(19, 27, 61, 16);
+//		panelProduitsSaisir.add(produitTypeLabel);
+//		// List of product types 
+//        String s1_TypeProduits[] = {"Article", "Utensile"}; 
+//		JComboBox produitTypeComboBox = new JComboBox(s1_TypeProduits);
+//		produitTypeComboBox.setBounds(154, 23, 217, 30);
+//		panelProduitsSaisir.add(produitTypeComboBox);
+//		//**************************************************//
 		
 		
 		//**************************************************//
@@ -158,7 +175,41 @@ public class NestiStockJava {
 		produitFournisseur.setBounds(19, 342, 97, 16);
 		panelProduitsSaisir.add(produitFournisseur);
 		
-
+		produitNomText = new JTextField();
+		produitNomText.setBackground(SystemColor.window);
+		produitNomText.setBounds(168, 68, 203, 26);
+		panelProduitsSaisir.add(produitNomText);
+		produitNomText.setColumns(10);
+		
+		produitEtatText = new JTextField();
+		produitEtatText.setBackground(SystemColor.window);
+		produitEtatText.setBounds(168, 122, 203, 26);
+		panelProduitsSaisir.add(produitEtatText);
+		produitEtatText.setColumns(10);
+		
+		produitDateCreationText = new JTextField();
+		produitDateCreationText.setBackground(SystemColor.window);
+		produitDateCreationText.setBounds(168, 175, 203, 26);
+		panelProduitsSaisir.add(produitDateCreationText);
+		produitDateCreationText.setColumns(10);
+		
+		produitDateConsomText = new JTextField();
+		produitDateConsomText.setBackground(SystemColor.window);
+		produitDateConsomText.setBounds(168, 228, 203, 26);
+		panelProduitsSaisir.add(produitDateConsomText);
+		produitDateConsomText.setColumns(10);
+		
+		produitMarqueText = new JTextField();
+		produitMarqueText.setBackground(SystemColor.window);
+		produitMarqueText.setBounds(168, 280, 203, 26);
+		panelProduitsSaisir.add(produitMarqueText);
+		produitMarqueText.setColumns(10);
+		
+		produitFournisseurText = new JTextField();
+		produitFournisseurText.setBackground(SystemColor.window);
+		produitFournisseurText.setBounds(168, 337, 203, 26);
+		panelProduitsSaisir.add(produitFournisseurText);
+		produitFournisseurText.setColumns(10);
 		
 		/**
 		 * Tab Recherche
@@ -174,14 +225,28 @@ public class NestiStockJava {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnProduitRecherche.setBounds(237, 6, 108, 29);
+		btnProduitRecherche.setBounds(243, 9, 108, 29);
 		btnProduitRecherche.setBackground(new Color(255, 228, 225));
 		panelRecherche.add(btnProduitRecherche);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(407, 152, 355, 382);
-		panelProduits.add(panel);
+//		JComboBox nomColProduitList = new JComboBox();
+//		nomColProduitList.setBounds(6, 9, 127, 28);
+//		panelRecherche.add(nomColProduitList);
+		
+		produitSaisirTextRecherche = new JTextField();
+		produitSaisirTextRecherche.setBackground(SystemColor.window);
+		produitSaisirTextRecherche.setBounds(131, 9, 108, 26);
+		panelRecherche.add(produitSaisirTextRecherche);
+		produitSaisirTextRecherche.setColumns(10);
+		
+		JPanel panelListArticles = new JPanel();
+		panelListArticles.setBackground(new Color(255, 255, 255));
+		panelListArticles.setBounds(407, 152, 355, 382);
+		panelProduits.add(panelListArticles);
+		
+		tableListArticle = new JTable();
+		tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
+		panelListArticles.add(tableListArticle);
 		
 		JLabel listeArticle = new JLabel("Liste d'articles");
 		listeArticle.setFont(new Font("Ubuntu", Font.PLAIN, 20));
@@ -222,6 +287,82 @@ public class NestiStockJava {
 		FournissieursLabel_1.setBounds(6, 6, 779, 40);
 		panelFournisseurs.add(FournissieursLabel_1);
 		FournissieursLabel_1.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		
+		JPanel panelProduitsSaisir_1 = new JPanel();
+		panelProduitsSaisir_1.setLayout(null);
+		panelProduitsSaisir_1.setBackground(Color.WHITE);
+		panelProduitsSaisir_1.setBounds(28, 44, 377, 477);
+		panelFournisseurs.add(panelProduitsSaisir_1);
+		
+		JButton btnProduitSubmit_1 = new JButton("Submit");
+		btnProduitSubmit_1.setBackground(new Color(255, 228, 225));
+		btnProduitSubmit_1.setBounds(49, 430, 117, 29);
+		panelProduitsSaisir_1.add(btnProduitSubmit_1);
+		
+		JButton btnProduitEffacer_1 = new JButton("Effacer");
+		btnProduitEffacer_1.setBackground(new Color(255, 228, 225));
+		btnProduitEffacer_1.setBounds(201, 430, 117, 29);
+		panelProduitsSaisir_1.add(btnProduitEffacer_1);
+		
+		JLabel fournisseurNomEntreprise = new JLabel("Nom d'entreprise");
+		fournisseurNomEntreprise.setBounds(19, 73, 117, 16);
+		panelProduitsSaisir_1.add(fournisseurNomEntreprise);
+		
+		JLabel produitEtat_1 = new JLabel("Etat");
+		produitEtat_1.setBounds(19, 127, 61, 16);
+		panelProduitsSaisir_1.add(produitEtat_1);
+		
+		JLabel produitDateDeCreation_1 = new JLabel("Date de creation");
+		produitDateDeCreation_1.setBounds(19, 180, 147, 16);
+		panelProduitsSaisir_1.add(produitDateDeCreation_1);
+		
+		JLabel produitDateDeConsommation_1 = new JLabel("Date de consommation");
+		produitDateDeConsommation_1.setBounds(19, 233, 163, 16);
+		panelProduitsSaisir_1.add(produitDateDeConsommation_1);
+		
+		JLabel produitMarque_1 = new JLabel("Marque");
+		produitMarque_1.setBounds(19, 285, 61, 16);
+		panelProduitsSaisir_1.add(produitMarque_1);
+		
+		JLabel produitFournisseur_1 = new JLabel("Fournisseur");
+		produitFournisseur_1.setBounds(19, 342, 97, 16);
+		panelProduitsSaisir_1.add(produitFournisseur_1);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBackground(SystemColor.window);
+		textField.setBounds(168, 68, 203, 26);
+		panelProduitsSaisir_1.add(textField);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBackground(SystemColor.window);
+		textField_1.setBounds(168, 122, 203, 26);
+		panelProduitsSaisir_1.add(textField_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBackground(SystemColor.window);
+		textField_2.setBounds(168, 175, 203, 26);
+		panelProduitsSaisir_1.add(textField_2);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBackground(SystemColor.window);
+		textField_3.setBounds(168, 228, 203, 26);
+		panelProduitsSaisir_1.add(textField_3);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBackground(SystemColor.window);
+		textField_4.setBounds(168, 280, 203, 26);
+		panelProduitsSaisir_1.add(textField_4);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBackground(SystemColor.window);
+		textField_5.setBounds(168, 337, 203, 26);
+		panelProduitsSaisir_1.add(textField_5);
 		/**
 		 * Tab Commandes
 		 */
@@ -285,5 +426,4 @@ public class NestiStockJava {
 			
 					
 	}
-
 }
