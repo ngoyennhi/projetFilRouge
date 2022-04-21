@@ -1,4 +1,4 @@
-package classesNesti;
+package classes;
 
 public class Fournisseur {
 

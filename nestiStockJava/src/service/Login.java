@@ -1,4 +1,4 @@
-package NestiStockJava.scr.conn;
+package service;
 //First, we develop a login module that authenticate user based on username and password.
 //To make it simple, we hard-code the username and password in this module. 
 public class Login {

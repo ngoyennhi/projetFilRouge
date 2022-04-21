@@ -1,4 +1,4 @@
-package NestiStockJava.scr.conn;
+package service;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

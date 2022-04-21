@@ -1,4 +1,4 @@
-package NestiStockJava.scr.conn;
+package service;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

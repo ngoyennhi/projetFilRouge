@@ -1,4 +1,4 @@
-package NestiStockJava.scr.conn;
+package view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -26,7 +26,7 @@ public class MyFrame extends JFrame {
 	label.setFont(new Font("Rockwell", Font.BOLD, 40));
 			
 	this.setBounds(100, 100, 450, 300); // set (x,y,weight,high) as well as dimension
-	this.setTitle("NestiStockJava V.1"); // sets title of this
+	this.setTitle("nestiStockJava V.1"); // sets title of this
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application
 	this.setResizable(false); // prevent this from being resized
 	this.setVisible(true); // make this visible
