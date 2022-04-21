@@ -64,6 +64,7 @@ public class NestiStockJava {
 	 * 
 	 * Méthode initialize qui est applelé dans le constructeur
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		
 		frame = new MyFrame(); //modify class MyFrame.java if you want
@@ -109,6 +110,7 @@ public class NestiStockJava {
 		btnProduitEffacer.setBounds(201, 430, 117, 29);
 		panelProduitsSaisir.add(btnProduitEffacer);
 		
+		
 		//**************************************************//
 		// Label Type
 		JLabel produitTypeLabel = new JLabel("Type");
@@ -121,17 +123,28 @@ public class NestiStockJava {
 		panelProduitsSaisir.add(produitTypeComboBox);
 		//**************************************************//
 		
+		
+		//**************************************************//
+		// Label Nom
 		JLabel produitNom = new JLabel("Nom");
 		produitNom.setBounds(19, 73, 61, 16);
 		panelProduitsSaisir.add(produitNom);
+		//**************************************************//
 		
+		
+		//**************************************************//
+		// Label Etat
 		JLabel produitEtat = new JLabel("Etat");
 		produitEtat.setBounds(19, 127, 61, 16);
 		panelProduitsSaisir.add(produitEtat);
+		//**************************************************//
+		
 		
 		JLabel produitDateDeCreation = new JLabel("Date de creation");
 		produitDateDeCreation.setBounds(19, 180, 147, 16);
+		//setEnabled(false);
 		panelProduitsSaisir.add(produitDateDeCreation);
+		
 		
 		JLabel produitDateDeConsommation = new JLabel("Date de consommation");
 		produitDateDeConsommation.setBounds(19, 233, 163, 16);
