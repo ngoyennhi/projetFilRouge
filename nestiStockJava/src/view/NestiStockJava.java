@@ -47,6 +47,8 @@ public class NestiStockJava {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -239,6 +241,10 @@ public class NestiStockJava {
 		panelRecherche.add(produitSaisirTextRecherche);
 		produitSaisirTextRecherche.setColumns(10);
 		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(6, 10, 124, 27);
+		panelRecherche.add(comboBox);
+		
 		JPanel panelListArticles = new JPanel();
 		panelListArticles.setBackground(new Color(255, 255, 255));
 		panelListArticles.setBounds(407, 152, 355, 382);
@@ -363,6 +369,63 @@ public class NestiStockJava {
 		textField_5.setBackground(SystemColor.window);
 		textField_5.setBounds(168, 337, 203, 26);
 		panelProduitsSaisir_1.add(textField_5);
+		
+		JButton btnProduitCreer_1 = new JButton("Creer");
+		btnProduitCreer_1.setBackground(new Color(255, 228, 225));
+		btnProduitCreer_1.setBounds(32, 533, 121, 45);
+		panelFournisseurs.add(btnProduitCreer_1);
+		
+		JButton btnProduitModifier_1 = new JButton("Modifier");
+		btnProduitModifier_1.setBackground(new Color(255, 228, 225));
+		btnProduitModifier_1.setBounds(176, 534, 129, 45);
+		panelFournisseurs.add(btnProduitModifier_1);
+		
+		JButton btnProduitSupprimer_1 = new JButton("Supprimer");
+		btnProduitSupprimer_1.setBackground(new Color(255, 228, 225));
+		btnProduitSupprimer_1.setBounds(324, 533, 129, 45);
+		panelFournisseurs.add(btnProduitSupprimer_1);
+		
+		JButton btnProduitMisAJours_1 = new JButton("Mis à jours");
+		btnProduitMisAJours_1.setBackground(new Color(255, 228, 225));
+		btnProduitMisAJours_1.setBounds(538, 529, 129, 45);
+		panelFournisseurs.add(btnProduitMisAJours_1);
+		
+		JLabel lblListeDfournisseurs = new JLabel("Liste d'fournisseurs");
+		lblListeDfournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		lblListeDfournisseurs.setBounds(417, 89, 352, 38);
+		panelFournisseurs.add(lblListeDfournisseurs);
+		
+		JPanel panelRecherche_1 = new JPanel();
+		panelRecherche_1.setLayout(null);
+		panelRecherche_1.setBackground(Color.WHITE);
+		panelRecherche_1.setBounds(418, 44, 351, 45);
+		panelFournisseurs.add(panelRecherche_1);
+		
+		JButton btnProduitRecherche_1 = new JButton("Recherche");
+		btnProduitRecherche_1.setBackground(new Color(255, 228, 225));
+		btnProduitRecherche_1.setBounds(243, 9, 108, 29);
+		panelRecherche_1.add(btnProduitRecherche_1);
+		
+		textField_6 = new JTextField();
+		textField_6.setColumns(10);
+		textField_6.setBackground(SystemColor.window);
+		textField_6.setBounds(131, 9, 108, 26);
+		panelRecherche_1.add(textField_6);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(6, 10, 125, 29);
+		panelRecherche_1.add(comboBox_1);
+		
+		JPanel panelListArticles_1 = new JPanel();
+		panelListArticles_1.setBackground(Color.WHITE);
+		panelListArticles_1.setBounds(417, 121, 355, 382);
+		panelFournisseurs.add(panelListArticles_1);
+		panelListArticles_1.setLayout(null);
+		
+		table = new JTable();
+		table.setBounds(177, 5, 0, 0);
+		table.setBorder(new LineBorder(SystemColor.activeCaptionText));
+		panelListArticles_1.add(table);
 		/**
 		 * Tab Commandes
 		 */
