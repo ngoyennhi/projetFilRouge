@@ -1,5 +1,6 @@
 package view;
 
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -21,6 +22,10 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
 public class NestiStockJava {
 
@@ -63,8 +68,6 @@ public class NestiStockJava {
 		
 		frame = new MyFrame(); //modify class MyFrame.java if you want
 		
-		
-		
 			/**
 			 * Tab Menu
 			 */
@@ -78,7 +81,9 @@ public class NestiStockJava {
 		JPanel panelProduits = new JPanel();
 		tabbedPane.addTab("Produits", null, panelProduits, "CRUD Produits");
 		panelProduits.setLayout(null);
-		
+		/**
+		 * Tab Produits
+		 */
 		JLabel produitLabel = new JLabel("Cet onglet permet de renseigner des articles/ des utensiles");
 		produitLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
 		produitLabel.setBounds(24, 6, 602, 38);
@@ -104,6 +109,47 @@ public class NestiStockJava {
 		btnProduitEffacer.setBounds(201, 430, 117, 29);
 		panelProduitsSaisir.add(btnProduitEffacer);
 		
+		//**************************************************//
+		// Label Type
+		JLabel produitTypeLabel = new JLabel("Type");
+		produitTypeLabel.setBounds(19, 27, 61, 16);
+		panelProduitsSaisir.add(produitTypeLabel);
+		// List of product types 
+        String s1_TypeProduits[] = {"Article", "Utensile"}; 
+		JComboBox produitTypeComboBox = new JComboBox(s1_TypeProduits);
+		produitTypeComboBox.setBounds(154, 23, 217, 30);
+		panelProduitsSaisir.add(produitTypeComboBox);
+		//**************************************************//
+		
+		JLabel produitNom = new JLabel("Nom");
+		produitNom.setBounds(19, 73, 61, 16);
+		panelProduitsSaisir.add(produitNom);
+		
+		JLabel produitEtat = new JLabel("Etat");
+		produitEtat.setBounds(19, 127, 61, 16);
+		panelProduitsSaisir.add(produitEtat);
+		
+		JLabel produitDateDeCreation = new JLabel("Date de creation");
+		produitDateDeCreation.setBounds(19, 180, 147, 16);
+		panelProduitsSaisir.add(produitDateDeCreation);
+		
+		JLabel produitDateDeConsommation = new JLabel("Date de consommation");
+		produitDateDeConsommation.setBounds(19, 233, 163, 16);
+		panelProduitsSaisir.add(produitDateDeConsommation);
+		
+		JLabel produitMarque = new JLabel("Marque");
+		produitMarque.setBounds(19, 285, 61, 16);
+		panelProduitsSaisir.add(produitMarque);
+		
+		JLabel produitFournisseur = new JLabel("Fournisseur");
+		produitFournisseur.setBounds(19, 342, 97, 16);
+		panelProduitsSaisir.add(produitFournisseur);
+		
+
+		
+		/**
+		 * Tab Recherche
+		 */
 		JPanel panelRecherche = new JPanel();
 		panelRecherche.setBackground(new Color(255, 255, 255));
 		panelRecherche.setBounds(411, 56, 351, 45);
@@ -152,7 +198,9 @@ public class NestiStockJava {
 		btnProduitMisAJours.setBackground(new Color(255, 228, 225));
 		btnProduitMisAJours.setBounds(534, 545, 129, 45);
 		panelProduits.add(btnProduitMisAJours);
-		
+		/**
+		 * Tab Fournisseurs
+		 */
 		JPanel panelFournisseurs = new JPanel();
 		tabbedPane.addTab("Fournisseurs", null, panelFournisseurs, "CRUD Fournisseurs");
 		panelFournisseurs.setLayout(null);
@@ -161,7 +209,9 @@ public class NestiStockJava {
 		FournissieursLabel_1.setBounds(6, 6, 779, 40);
 		panelFournisseurs.add(FournissieursLabel_1);
 		FournissieursLabel_1.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-		
+		/**
+		 * Tab Commandes
+		 */
 		JPanel panelCommandes = new JPanel();
 		tabbedPane.addTab("Commandes", null, panelCommandes, "CRUD Commandes");
 		panelCommandes.setLayout(null);
@@ -186,7 +236,8 @@ public class NestiStockJava {
                         if(loginDlg.isSucceeded()){
                             btnLogin.setText("Hi " + loginDlg.getUsername() + "!");
                            // connect DB
-                            MyConnexion conn = new MyConnexion();
+                            //MyConnexion conn = new MyConnexion();
+                            MyConnexion.openConnection();
                             // display All tabs
                             tabbedPane.setVisible(true);
                         }
@@ -206,60 +257,20 @@ public class NestiStockJava {
                         btnLogin.setText("Login");
                     }
                 });
-//		/**
-//		 * Grid of 3 btn OPTIONS 
-//		 */
-//	
-//		JPanel panel_centre = new JPanel();
-//		panel_centre.setBounds(65, 294, 663, 206);
-//		frame.getContentPane().add(panel_centre);
-//		panel_centre.setBackground(new Color(0, 128, 128));
-//		panel_centre.setLayout(null);
-//		
-//		/**
-//		 * btn Fournisseurs
-//		 */
-//		JButton btnFournisseurs = new JButton("Fournisseurs");
-//		btnFournisseurs.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//			}
-//		});
-//		btnFournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-//		btnFournisseurs.setForeground(new Color(0, 128, 128));
-//		btnFournisseurs.setBackground(new Color(192, 192, 192));
-//		btnFournisseurs.setBounds(224, 60, 206, 72);
-//		panel_centre.add(btnFournisseurs);
-//		
-//		/**
-//		 * btn Produits
-//		 */
-//		JButton btnProduits = new JButton("Produits");
-//		btnProduits.setForeground(new Color(0, 128, 128));
-//		btnProduits.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-//		btnProduits.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//
-//			}
-//		});
-//		btnProduits.setBackground(Color.LIGHT_GRAY);
-//		btnProduits.setBounds(6, 60, 206, 72);
-//		panel_centre.add(btnProduits);
-//		
-//		/**
-//		 * btn Commandes
-//		 */
-//		JButton btnCommandes = new JButton("Commandes");
-//		btnCommandes.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//			}
-//		});
-//		btnCommandes.setForeground(new Color(0, 128, 128));
-//		btnCommandes.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-//		btnCommandes.setBackground(Color.LIGHT_GRAY);
-//		btnCommandes.setBounds(442, 60, 206, 72);
-//		panel_centre.add(btnCommandes);
 	
-		
-
+			
+		// // JOptionPane = pop up a standard dialog box that prompts users for a value or informs them of something
+			//			JOptionPane.showMessageDialog(null, "This is some useless info","NestiStockJava",JOptionPane.PLAIN_MESSAGE);
+			//			JOptionPane.showMessageDialog(null, "Here is more useless info","NestiStockJava",JOptionPane.INFORMATION_MESSAGE);
+			//			JOptionPane.showMessageDialog(null, "Are you sure?","NestiStockJava",JOptionPane.QUESTION_MESSAGE);
+			//			JOptionPane.showMessageDialog(null, "Problem service!!","NestiStockJava",JOptionPane.WARNING_MESSAGE);
+			//			JOptionPane.showMessageDialog(null, "Contact me to get tech support","NestiStockJava",JOptionPane.ERROR_MESSAGE);
+			
+//			// answer = 0,1,-1 yes/no/cancel
+//						int answer = JOptionPane.showConfirmDialog(null, "Fini votre travail?","NestiStockJava",JOptionPane.YES_NO_CANCEL_OPTION);
+//						System.out.println(answer);
+			
+					
 	}
+
 }
