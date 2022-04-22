@@ -376,25 +376,25 @@ public class NestiStockJava {
 		textField_5.setBounds(168, 337, 203, 26);
 		panelFournisseursSaisir.add(textField_5);
 		
-		JButton btnProduitCreer_1 = new JButton("Creer");
-		btnProduitCreer_1.setBackground(new Color(255, 228, 225));
-		btnProduitCreer_1.setBounds(32, 533, 121, 45);
-		panelFournisseurs.add(btnProduitCreer_1);
+		JButton btnFournisseursCreer = new JButton("Creer");
+		btnFournisseursCreer.setBackground(new Color(255, 228, 225));
+		btnFournisseursCreer.setBounds(32, 533, 121, 45);
+		panelFournisseurs.add(btnFournisseursCreer);
 		
-		JButton btnProduitModifier_1 = new JButton("Modifier");
-		btnProduitModifier_1.setBackground(new Color(255, 228, 225));
-		btnProduitModifier_1.setBounds(176, 534, 129, 45);
-		panelFournisseurs.add(btnProduitModifier_1);
+		JButton btnFournisseursModifier = new JButton("Modifier");
+		btnFournisseursModifier.setBackground(new Color(255, 228, 225));
+		btnFournisseursModifier.setBounds(176, 534, 129, 45);
+		panelFournisseurs.add(btnFournisseursModifier);
 		
-		JButton btnProduitSupprimer_1 = new JButton("Supprimer");
-		btnProduitSupprimer_1.setBackground(new Color(255, 228, 225));
-		btnProduitSupprimer_1.setBounds(324, 533, 129, 45);
-		panelFournisseurs.add(btnProduitSupprimer_1);
+		JButton btnFournisseursSupprimer = new JButton("Supprimer");
+		btnFournisseursSupprimer.setBackground(new Color(255, 228, 225));
+		btnFournisseursSupprimer.setBounds(324, 533, 129, 45);
+		panelFournisseurs.add(btnFournisseursSupprimer);
 		
-		JButton btnProduitMisAJours_1 = new JButton("Mis à jours");
-		btnProduitMisAJours_1.setBackground(new Color(255, 228, 225));
-		btnProduitMisAJours_1.setBounds(538, 529, 129, 45);
-		panelFournisseurs.add(btnProduitMisAJours_1);
+		JButton btnFournisseursMisAJours = new JButton("Mis à jours");
+		btnFournisseursMisAJours.setBackground(new Color(255, 228, 225));
+		btnFournisseursMisAJours.setBounds(538, 529, 129, 45);
+		panelFournisseurs.add(btnFournisseursMisAJours);
 		
 		JLabel lblListeDfournisseurs = new JLabel("Liste d'fournisseurs");
 		lblListeDfournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
