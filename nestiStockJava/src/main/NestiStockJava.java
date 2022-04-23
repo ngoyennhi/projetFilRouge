@@ -1,4 +1,4 @@
-package view;
+package main;
 
 
 import java.awt.Color;
@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 
 import service.LoginDialog;
 import service.MyConnexion;
+import view.MyFrame;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JToolBar;
@@ -118,17 +119,17 @@ public class NestiStockJava {
 		panelProduitsSaisir.setBounds(22, 56, 377, 477);
 		panelProduits.add(panelProduitsSaisir);
 		panelProduitsSaisir.setLayout(null);
-		/**
-		 * btn Submit
-		 */
-		JButton btnProduitSubmit = new JButton("Submit");
-		btnProduitSubmit.setBackground(new Color(255, 228, 225));
-		btnProduitSubmit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnProduitSubmit.setBounds(49, 430, 117, 29);
-		panelProduitsSaisir.add(btnProduitSubmit);
+//		/**
+//		 * btn Submit
+//		 */
+//		JButton btnProduitSubmit = new JButton("Submit");
+//		btnProduitSubmit.setBackground(new Color(255, 228, 225));
+//		btnProduitSubmit.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			}
+//		});
+//		btnProduitSubmit.setBounds(49, 430, 117, 29);
+//		panelProduitsSaisir.add(btnProduitSubmit);
 		/**
 		 * btn Effacer
 		 */
@@ -281,29 +282,13 @@ public class NestiStockJava {
 		listeArticle.setFont(new Font("Ubuntu", Font.PLAIN, 20));
 		listeArticle.setBounds(411, 112, 352, 38);
 		panelProduits.add(listeArticle);
-		//btn "Creer" - Produits
+		/**
+		 * btn "Creer" - Produits
+		 */
 		JButton btnProduitCreer = new JButton("Creer");
 		btnProduitCreer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//			String pnomString =	produitNomText.getText();
-//			String pEtatString = produitEtatText.getText();
-//			String pMarqueString = 	produitMarqueText.getText();
-//			String pDateConsomString = produitDateConsomText.getText();
-////			String pFournisseurString = produitFournisseurText.getText();
-//			// query to insert your infos into table dragons
-//			String query = "INSERT INTO article(nom,etat,marque,date_consom)";
-//			// prepare statement for a query
-//			try {
-//				PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
-//				declaration.setString(1, pnomString);
-//				declaration.setString(2, pEtatString);
-//				declaration.setString(3, pMarqueString);
-//				declaration.setString(4, pDateConsomString);
-////				declaration.setString(5, pFournisseurString);
-//				
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
+
 					String pnomString =	produitNomText.getText();
 					String pEtatString = produitEtatText.getText();
 					String pMarqueString = 	produitMarqueText.getText();
@@ -313,7 +298,7 @@ public class NestiStockJava {
 
 	        			// query to insert your infos into table article
 	        			//String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) VALUES(?,?,?)";
-	        			   String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) values('" + pnomString + "','" + pEtatString + "','" + pMarqueString + "')";
+	        			String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) values('" + pnomString + "','" + pEtatString + "','" + pMarqueString + "')";
 	        			// prepare statement for a query
 	        			PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
 //	    				declaration.setString(1, pnomString);

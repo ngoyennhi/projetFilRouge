@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame {
 	//Construction 
-	MyFrame() {
+	public MyFrame() {
 
 	JLabel label = new JLabel();
 	label.setBounds(0, 0, 800, 80);
