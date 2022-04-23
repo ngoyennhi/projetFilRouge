@@ -8,17 +8,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MyConnexion {
-	static Connection accessDataBase = null;
-	/**
-	 * Let's test the connection
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		openConnection();
-		testConnection();
-		//closeConnection();
-	}
+	public static Connection accessDataBase = null;
+//	/**
+//	 * Let's test the connection
+//	 * 
+//	 * @param args
+//	 */
+//	public static void main(String[] args) {
+//		openConnection();
+//		//testConnection();
+//		//closeConnection();
+//	}
 	/**
 	 * Connection to my projetFilRouge database Opening the connection
 	 * 
