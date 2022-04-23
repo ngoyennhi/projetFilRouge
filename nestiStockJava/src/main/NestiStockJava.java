@@ -354,24 +354,21 @@ public class NestiStockJava {
 				      }
 				    
 				      DefaultTableModel model = new DefaultTableModel(data, columns);
-				   // add header in table model     
+				   // add header in table model  
 				      model.setColumnIdentifiers(columns);
 				      JPanel panelListArticles = new JPanel();
 						panelListArticles.setBackground(new Color(255, 255, 255));
-						panelListArticles.setBounds(407, 152, 355, 382);
+						panelListArticles.setBounds(407, 165, 355, 382);
 						panelProduits.add(panelListArticles);
 						
 						tableListArticle = new JTable(model);
 						tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
 						tableListArticle.setShowGrid(true);
 						tableListArticle.setShowVerticalLines(true);
-						JScrollPane pane = new JScrollPane(tableListArticle);
-						pane.setSize(200, 100);
-						panelListArticles.add(pane);
-						panelListArticles.add(tableListArticle);
+						tableListArticle.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						panelListArticles.add(new JScrollPane(tableListArticle));
 						panelListArticles.setVisible(true);
 						
-				    
 				    } catch(SQLException e3) {
 				      e3.printStackTrace();
 				    }
