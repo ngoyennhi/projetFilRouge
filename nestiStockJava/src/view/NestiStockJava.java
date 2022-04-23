@@ -104,9 +104,11 @@ public class NestiStockJava {
 		tabbedPane.setVisible(false);
 		frame.getContentPane().add(tabbedPane);
 		
+		
 		JPanel panelProduits = new JPanel();
 		tabbedPane.addTab("Produits", null, panelProduits, "CRUD Produits");
 		panelProduits.setLayout(null);
+		
 		/**
 		 * Tab Produits
 		 */
@@ -116,7 +118,9 @@ public class NestiStockJava {
 		panelProduitsSaisir.setBounds(22, 56, 377, 477);
 		panelProduits.add(panelProduitsSaisir);
 		panelProduitsSaisir.setLayout(null);
-		
+		/**
+		 * btn Submit
+		 */
 		JButton btnProduitSubmit = new JButton("Submit");
 		btnProduitSubmit.setBackground(new Color(255, 228, 225));
 		btnProduitSubmit.addActionListener(new ActionListener() {
@@ -125,19 +129,17 @@ public class NestiStockJava {
 		});
 		btnProduitSubmit.setBounds(49, 430, 117, 29);
 		panelProduitsSaisir.add(btnProduitSubmit);
-		
+		/**
+		 * btn Effacer
+		 */
 		JButton btnProduitEffacer = new JButton("Effacer");
 		btnProduitEffacer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				produitNomText.setText(null);
-				
 				produitEtatText.setText(null);
-				
 				produitDateConsomText.setText(null);
-
 				produitMarqueText.setText(null);
-
-				//produitFournisseurText.setText(null);
+				produitFournisseurText.setText(null);
 			}
 			
 		});
@@ -306,26 +308,24 @@ public class NestiStockJava {
 					String pEtatString = produitEtatText.getText();
 					String pMarqueString = 	produitMarqueText.getText();
 					//String pDateConsomString = produitDateConsomText.getText();
-	                String msg = "" + pnomString;
-	                msg += " \n";
 
 	                try {
 
-	        			// query to insert your infos into table dragons
-	        			String query = "INSERT INTO article (nom,etat,marque) VALUES(?,?,?)";
+	        			// query to insert your infos into table article
+	        			//String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) VALUES(?,?,?)";
+	        			   String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) values('" + pnomString + "','" + pEtatString + "','" + pMarqueString + "')";
 	        			// prepare statement for a query
 	        			PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
-	    				declaration.setString(1, pnomString.toString());
-	    				declaration.setString(2, pEtatString.toString());
-	    				declaration.setString(3, pMarqueString.toString());
+//	    				declaration.setString(1, pnomString);
+//	    				declaration.setString(2, pEtatString);
+//	    				declaration.setString(3, pMarqueString);
 	    				//declaration.setString(4, pDateConsomString);
-//	    				declaration.setString(5, pFournisseurString);
+	    				//declaration.setString(5, pFournisseurString);
 	                    int x = declaration.executeUpdate(query);
 	                    if (x == 0) {
-	                        JOptionPane.showMessageDialog(btnProduitCreer, "This is alredy exist");
+	                        JOptionPane.showMessageDialog(btnProduitCreer,"Please check your information");
 	                    } else {
-	                        JOptionPane.showMessageDialog(btnProduitCreer,
-	                            "Welcome, " + msg + "Your account is sucessfully created");
+	                        JOptionPane.showMessageDialog(btnProduitCreer,"Produit is sucessfully created");
 	                    }
 	                    
 	                } catch (Exception exception) {
