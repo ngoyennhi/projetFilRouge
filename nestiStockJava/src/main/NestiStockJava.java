@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ import javax.swing.JComboBox;
 import java.awt.SystemColor;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 import com.mysql.cj.xdevapi.PreparableStatement;
 
@@ -138,9 +140,9 @@ public class NestiStockJava {
 			public void actionPerformed(ActionEvent e) {
 				produitNomText.setText(null);
 				produitEtatText.setText(null);
-				produitDateConsomText.setText(null);
+				//produitDateConsomText.setText(null);
 				produitMarqueText.setText(null);
-				produitFournisseurText.setText(null);
+				//produitFournisseurText.setText(null);
 			}
 			
 		});
@@ -187,17 +189,17 @@ public class NestiStockJava {
 //		panelProduitsSaisir.add(produitDateDeCreation);
 		
 		
-		JLabel produitDateDeConsommation = new JLabel("Date de consommation");
-		produitDateDeConsommation.setBounds(19, 233, 163, 16);
-		panelProduitsSaisir.add(produitDateDeConsommation);
+//		JLabel produitDateDeConsommation = new JLabel("Date de consommation");
+//		produitDateDeConsommation.setBounds(19, 233, 163, 16);
+//		panelProduitsSaisir.add(produitDateDeConsommation);
 		
 		JLabel produitMarque = new JLabel("Marque");
 		produitMarque.setBounds(19, 285, 61, 16);
 		panelProduitsSaisir.add(produitMarque);
 		
-		JLabel produitFournisseur = new JLabel("Fournisseur");
-		produitFournisseur.setBounds(19, 342, 97, 16);
-		panelProduitsSaisir.add(produitFournisseur);
+//		JLabel produitFournisseur = new JLabel("Fournisseur");
+//		produitFournisseur.setBounds(19, 342, 97, 16);
+//		panelProduitsSaisir.add(produitFournisseur);
 		
 		produitNomText = new JTextField();
 		produitNomText.setBackground(SystemColor.window);
@@ -218,11 +220,11 @@ public class NestiStockJava {
 //		panelProduitsSaisir.add(produitDateCreationText);
 //		produitDateCreationText.setColumns(10);
 		
-		produitDateConsomText = new JTextField();
-		produitDateConsomText.setBackground(SystemColor.window);
-		produitDateConsomText.setBounds(168, 228, 203, 26);
-		panelProduitsSaisir.add(produitDateConsomText);
-		produitDateConsomText.setColumns(10);
+//		produitDateConsomText = new JTextField();
+//		produitDateConsomText.setBackground(SystemColor.window);
+//		produitDateConsomText.setBounds(168, 228, 203, 26);
+//		panelProduitsSaisir.add(produitDateConsomText);
+//		produitDateConsomText.setColumns(10);
 
 		produitMarqueText = new JTextField();
 		produitMarqueText.setBackground(SystemColor.window);
@@ -269,19 +271,7 @@ public class NestiStockJava {
 		produitSaisirTextRecherche.setColumns(10);
 	
 		
-		JPanel panelListArticles = new JPanel();
-		panelListArticles.setBackground(new Color(255, 255, 255));
-		panelListArticles.setBounds(407, 152, 355, 382);
-		panelProduits.add(panelListArticles);
 		
-		tableListArticle = new JTable();
-		tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
-		panelListArticles.add(tableListArticle);
-		
-		JLabel listeArticle = new JLabel("Liste d'articles");
-		listeArticle.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-		listeArticle.setBounds(411, 112, 352, 38);
-		panelProduits.add(listeArticle);
 		/**
 		 * btn "Creer" - Produits
 		 */
@@ -296,14 +286,14 @@ public class NestiStockJava {
 
 	                try {
 
-	        			// query to insert your infos into table article
+	        			// query to insert your info into table article
 	        			//String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) VALUES(?,?,?)";
 	        			String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) values('" + pnomString + "','" + pEtatString + "','" + pMarqueString + "')";
 	        			// prepare statement for a query
 	        			PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
-//	    				declaration.setString(1, pnomString);
-//	    				declaration.setString(2, pEtatString);
-//	    				declaration.setString(3, pMarqueString);
+	        			//declaration.setString(1, pnomString);
+	        			//declaration.setString(2, pEtatString);
+	        			//declaration.setString(3, pMarqueString);
 	    				//declaration.setString(4, pDateConsomString);
 	    				//declaration.setString(5, pFournisseurString);
 	                    int x = declaration.executeUpdate(query);
@@ -311,6 +301,12 @@ public class NestiStockJava {
 	                        JOptionPane.showMessageDialog(btnProduitCreer,"Please check your information");
 	                    } else {
 	                        JOptionPane.showMessageDialog(btnProduitCreer,"Produit is sucessfully created");
+	                       //clear Text
+	                        produitNomText.setText(null);
+	        				produitEtatText.setText(null);
+	        				//produitDateConsomText.setText(null);
+	        				produitMarqueText.setText(null);
+	        				//produitFournisseurText.setText(null);
 	                    }
 	                    
 	                } catch (Exception exception) {
@@ -333,9 +329,64 @@ public class NestiStockJava {
 		panelProduits.add(btnProduitSupprimer);
 		
 		JButton btnProduitMisAJours = new JButton("Mis à jours");
+		btnProduitMisAJours.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try 
+				  {
+				      String query = "SELECT `id_article`,`nom`,`etat`,`marque` FROM article";
+				      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
+				      ResultSet res = declaration.executeQuery(query);
+				    
+				      String columns[] = { "id_article", "nom", "etat", "marque"};
+				      String data[][] = new String[20][4];
+				    
+				      int i = 0;
+				      while (res.next()) {
+				        int id_article = res.getInt("id_article");
+				        String nomString = res.getString("nom");
+				        String etatString = res.getString("etat");
+				        String marqueString = res.getString("marque");
+				        data[i][0] = id_article + "";
+				        data[i][1] = nomString;
+				        data[i][2] = etatString;
+				        data[i][3] = marqueString;
+				        i++;
+				      }
+				    
+				      DefaultTableModel model = new DefaultTableModel(data, columns);
+				   // add header in table model     
+				      model.setColumnIdentifiers(columns);
+				      JPanel panelListArticles = new JPanel();
+						panelListArticles.setBackground(new Color(255, 255, 255));
+						panelListArticles.setBounds(407, 152, 355, 382);
+						panelProduits.add(panelListArticles);
+						
+						tableListArticle = new JTable(model);
+						tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
+						tableListArticle.setShowGrid(true);
+						tableListArticle.setShowVerticalLines(true);
+						JScrollPane pane = new JScrollPane(tableListArticle);
+						pane.setSize(200, 100);
+						panelListArticles.add(pane);
+						panelListArticles.add(tableListArticle);
+						panelListArticles.setVisible(true);
+						
+				    
+				    } catch(SQLException e3) {
+				      e3.printStackTrace();
+				    }
+			}
+		});
 		btnProduitMisAJours.setBackground(new Color(255, 228, 225));
 		btnProduitMisAJours.setBounds(534, 545, 129, 45);
 		panelProduits.add(btnProduitMisAJours);
+		
+
+		
+		JLabel listeArticle = new JLabel("Liste d'articles");
+		listeArticle.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		listeArticle.setBounds(411, 112, 352, 38);
+		panelProduits.add(listeArticle);
 //		/**
 //		 * Tab Fournisseurs
 //		 */
