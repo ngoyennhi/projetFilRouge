@@ -36,6 +36,7 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.mysql.cj.xdevapi.DatabaseObject.DbObjectType;
 import com.mysql.cj.xdevapi.PreparableStatement;
 
 public class NestiStockJava {
@@ -149,23 +150,37 @@ public class NestiStockJava {
 		btnProduitEffacer.setBackground(new Color(255, 228, 225));
 		btnProduitEffacer.setBounds(201, 430, 117, 29);
 		panelProduitsSaisir.add(btnProduitEffacer);
-		
-		
+
 //		//**************************************************//
-//		// Label Type
-//		JLabel produitTypeLabel = new JLabel("Type");
-//		produitTypeLabel.setBounds(19, 27, 61, 16);
-//		panelProduitsSaisir.add(produitTypeLabel);
-//		// List of product types 
-//		//Indices start at 0 - Article , 1- Ustensile
-//        String s1_TypeProduits[] = {"Article", "Ustensile"}; 
-//		JComboBox produitTypeComboBox = new JComboBox(s1_TypeProduits);
-//		produitTypeComboBox.addActionListener(produitTypeComboBox);
-//		produitTypeComboBox.setBounds(154, 23, 217, 30);
-//		
-//		panelProduitsSaisir.add(produitTypeComboBox);
+		// Label Type
+		JLabel produitTypeLabel = new JLabel("Type");
+		produitTypeLabel.setBounds(19, 27, 61, 16);
+		panelProduitsSaisir.add(produitTypeLabel);
+		// List of product types 
+		//Indices start at 0 - Article , 1- Ustensile
+        Object[] s1_TypeProduits = new Object[]{"Article", "Ustensile"}; 
+		JComboBox<String> produitTypeComboBox = new JComboBox(s1_TypeProduits);
+		
+		JTextField produitTypeText = new JTextField();
+		produitTypeText.setVisible(false);
+		
+		produitTypeComboBox.addActionListener(produitTypeComboBox);
+		produitTypeComboBox.setBounds(154, 23, 217, 30);
+		produitTypeComboBox.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				e.getSource();
+				String s =(String) produitTypeComboBox.getSelectedItem();
+				produitTypeText.setText(s);
+			}
+			
+		});
+		panelProduitsSaisir.add(produitTypeComboBox);
+		
+		
 		//**************************************************//
 		
+		
+		//**************************************************//
 		
 		//**************************************************//
 		// Label Nom
@@ -275,20 +290,26 @@ public class NestiStockJava {
 		/**
 		 * btn "Creer" - Produits
 		 */
-		JButton btnProduitCreer = new JButton("Creer");
-		btnProduitCreer.addActionListener(new ActionListener() {
+		// Article List Panel
+	      JPanel panelListArticles = new JPanel(new BorderLayout());
+			panelListArticles.setBackground(new Color(255, 255, 255));
+			panelListArticles.setBounds(407, 165, 355, 382);
+			panelProduits.add(panelListArticles);
+			JButton btnProduitCreer = new JButton("Creer");
+			btnProduitCreer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+					String ptypeString = produitTypeText.getText();
 					String pnomString =	produitNomText.getText();
 					String pEtatString = produitEtatText.getText();
 					String pMarqueString = 	produitMarqueText.getText();
+					String pfournisseurString = produitFournisseurText.getText();
 					//String pDateConsomString = produitDateConsomText.getText();
 
 	                try {
-
 	        			// query to insert your info into table article
 	        			//String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) VALUES(?,?,?)";
-	        			String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) values('" + pnomString + "','" + pEtatString + "','" + pMarqueString + "')";
+	        			//String query = "INSERT INTO `article` (`nom`,`etat`,`marque`,) values('" + pnomString + "','" + pEtatString + "','" + pMarqueString + "')";
+	        			String query = "INSERT INTO `article` (`type`,`nom`,`etat`,`marque`,`fournisseur`) values('" +ptypeString+ "','" + pnomString + "','" + pEtatString + "','" + pMarqueString + "','" + pfournisseurString+ "')";
 	        			// prepare statement for a query
 	        			PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
 	        			//declaration.setString(1, pnomString);
@@ -322,8 +343,28 @@ public class NestiStockJava {
 		btnProduitModifier.setBackground(new Color(255, 228, 225));
 		btnProduitModifier.setBounds(165, 545, 129, 45);
 		panelProduits.add(btnProduitModifier);
-		
+		/**
+		 * btn Delete
+		 */
 		JButton btnProduitSupprimer = new JButton("Supprimer");
+		btnProduitSupprimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int idProduit = 0;
+				// SQL query to delete an article by id ( which was seleted by user)
+				String query = "DELETE FROM `article` WHERE `nom` = " + idProduit;
+				// prepare statement for a query
+    			PreparedStatement declaration;
+				try {
+					declaration = MyConnexion.accessDataBase.prepareStatement(query);
+					declaration.executeUpdate(query);} 
+				catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+    			
+                
+
+			}
+		});
 		btnProduitSupprimer.setBackground(new Color(255, 228, 225));
 		btnProduitSupprimer.setBounds(303, 545, 129, 45);
 		panelProduits.add(btnProduitSupprimer);
@@ -332,14 +373,15 @@ public class NestiStockJava {
 		btnProduitMisAJours.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try 
-				  {
+				  {	 
+				      // Col's name
+				      String columns[] = { "id_article", "nom", "etat", "marque"};
+				      // Row data
+				      Object[][] data = new Object[10][columns.length];
+				      // query to get all info from table article
 				      String query = "SELECT `id_article`,`nom`,`etat`,`marque` FROM article";
 				      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
 				      ResultSet res = declaration.executeQuery(query);
-				    
-				      String columns[] = { "id_article", "nom", "etat", "marque"};
-				      String data[][] = new String[20][4];
-				    
 				      int i = 0;
 				      while (res.next()) {
 				        int id_article = res.getInt("id_article");
@@ -352,23 +394,24 @@ public class NestiStockJava {
 				        data[i][3] = marqueString;
 				        i++;
 				      }
-				    
 				      DefaultTableModel model = new DefaultTableModel(data, columns);
-				   // add header in table model  
-				      model.setColumnIdentifiers(columns);
-				      JPanel panelListArticles = new JPanel();
-						panelListArticles.setBackground(new Color(255, 255, 255));
-						panelListArticles.setBounds(407, 165, 355, 382);
-						panelProduits.add(panelListArticles);
-						
-						tableListArticle = new JTable(model);
-						tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
-						tableListArticle.setShowGrid(true);
-						tableListArticle.setShowVerticalLines(true);
-						tableListArticle.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-						panelListArticles.add(new JScrollPane(tableListArticle));
-						panelListArticles.setVisible(true);
-						
+				      JTable table = new JTable(model);
+						for(int a=0; a<table.getColumnCount(); a++) {
+							table.getColumnModel().getColumn(a).setMinWidth(40);
+							table.getColumnModel().getColumn(a).setPreferredWidth(80);
+						}
+						table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						panelListArticles.add(table.getTableHeader(), BorderLayout.NORTH);
+						 
+						// éventuellement... 
+						table.setFillsViewportHeight(true);
+					
+						JPanel innerPanel = new JPanel(new BorderLayout()); // ou new GridLayout(0, 1)
+						innerPanel.add(table);
+						JScrollPane scrollpane = new JScrollPane(innerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				 
+						panelListArticles.add(scrollpane, BorderLayout.CENTER);
+
 				    } catch(SQLException e3) {
 				      e3.printStackTrace();
 				    }
