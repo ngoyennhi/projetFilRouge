@@ -158,7 +158,7 @@ public class NestiStockJava {
 		panelProduitsSaisir.add(produitTypeLabel);
 		// List of product types 
 		//Indices start at 0 - Article , 1- Ustensile
-        Object[] s1_TypeProduits = new Object[]{"Article", "Ustensile"}; 
+        Object[] s1_TypeProduits = new Object[]{"-------","Article", "Ustensile"}; 
 		JComboBox<String> produitTypeComboBox = new JComboBox(s1_TypeProduits);
 		
 		JTextField produitTypeText = new JTextField();
@@ -212,9 +212,9 @@ public class NestiStockJava {
 		produitMarque.setBounds(19, 285, 61, 16);
 		panelProduitsSaisir.add(produitMarque);
 		
-//		JLabel produitFournisseur = new JLabel("Fournisseur");
-//		produitFournisseur.setBounds(19, 342, 97, 16);
-//		panelProduitsSaisir.add(produitFournisseur);
+		JLabel produitFournisseur = new JLabel("Fournisseur");
+		produitFournisseur.setBounds(19, 342, 97, 16);
+		panelProduitsSaisir.add(produitFournisseur);
 		
 		produitNomText = new JTextField();
 		produitNomText.setBackground(SystemColor.window);
@@ -247,11 +247,11 @@ public class NestiStockJava {
 		panelProduitsSaisir.add(produitMarqueText);
 		produitMarqueText.setColumns(10);
 
-//		produitFournisseurText = new JTextField();
-//		produitFournisseurText.setBackground(SystemColor.window);
-//		produitFournisseurText.setBounds(168, 337, 203, 26);
-//		panelProduitsSaisir.add(produitFournisseurText);
-//		produitFournisseurText.setColumns(10);
+		produitFournisseurText = new JTextField();
+		produitFournisseurText.setBackground(SystemColor.window);
+		produitFournisseurText.setBounds(168, 337, 203, 26);
+		panelProduitsSaisir.add(produitFournisseurText);
+		produitFournisseurText.setColumns(10);
 
 		/**
 		 * Tab Recherche
@@ -327,7 +327,7 @@ public class NestiStockJava {
 	        				produitEtatText.setText(null);
 	        				//produitDateConsomText.setText(null);
 	        				produitMarqueText.setText(null);
-	        				//produitFournisseurText.setText(null);
+	        				produitFournisseurText.setText(null);
 	                    }
 	                    
 	                } catch (Exception exception) {
