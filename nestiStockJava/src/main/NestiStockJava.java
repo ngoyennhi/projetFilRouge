@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -362,9 +363,6 @@ public class NestiStockJava {
 				catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-    			
-                
-
 			}
 		});
 		btnProduitSupprimer.setBackground(new Color(255, 228, 225));
@@ -374,65 +372,60 @@ public class NestiStockJava {
 		/**
 		 * btn Mise à jour
 		 */
-		JButton btnProduitMisAJours = new JButton("Mise à jour");
-		btnProduitMisAJours.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try 
-				  {	 
-				     
-				      // query to get all info from table article
-				      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
-				      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
-				      ResultSet res = declaration.executeQuery(query);
-				      res.next();
-				      int count = res.getInt("recordCount");
-				      res.close(); 
-				      // Col's name
-				      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
-				      // Row data
-				      Object[][] data = new Object[count][columns.length];
-				      int i = 0;
-				      while (res.next()) {
-				        int id_article = res.getInt("id_article");
-				        String typeString = res.getString("type");
-				        String nomString = res.getString("nom");
-				        String etatString = res.getString("etat");
-				        String marqueString = res.getString("marque");
-				        String fournisseurString = res.getString("fournisseur");
-				        data[i][0] = id_article + "";
-				        data[i][1] = typeString;
-				        data[i][2] = nomString;
-				        data[i][3] = etatString;
-				        data[i][4] = marqueString;
-				        data[i][5] = fournisseurString;
-				        i++;
-				      }
-				      DefaultTableModel model = new DefaultTableModel(data, columns);
-				      JTable table = new JTable(model);
-						for(int a=0; a<table.getColumnCount(); a++) {
-							table.getColumnModel().getColumn(a).setMinWidth(40);
-							table.getColumnModel().getColumn(a).setPreferredWidth(80);
-						}
-						table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-						panelListArticles.add(table.getTableHeader(), BorderLayout.NORTH);
-						 
-						// éventuellement... 
-						table.setFillsViewportHeight(true);
-					
-						JPanel innerPanel = new JPanel(new BorderLayout()); // ou new GridLayout(0, 1)
-						innerPanel.add(table);
-						JScrollPane scrollpane = new JScrollPane(innerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-				 
-						panelListArticles.add(scrollpane, BorderLayout.CENTER);
+		JButton btnProduitMisAJours = new JButton("Mis à jours");
+ 		btnProduitMisAJours.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent e) {
+ 				try 
+ 				  {
+ 				      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
+ 				      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
+ 				      ResultSet res = declaration.executeQuery(query);
 
-				    } catch(SQLException e3) {
-				      e3.printStackTrace();
-				    }
-			}
-		});
-		btnProduitMisAJours.setBackground(new Color(255, 228, 225));
-		btnProduitMisAJours.setBounds(814, 545, 129, 45);
-		panelProduits.add(btnProduitMisAJours);
+ 				      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
+ 				      String data[][] = new String[20][6];
+
+ 				      int i = 0;
+ 				      while (res.next()) {
+ 				        int id_article = res.getInt("id_article");
+ 				        String nomString = res.getString("nom");
+ 				        String etatString = res.getString("etat");
+ 				        String marqueString = res.getString("marque");
+ 				       String typeString = res.getString("type");
+ 				      String fournisseurString = res.getString("fournisseur");
+ 				        data[i][0] = id_article + "";
+ 				        data[i][1] = nomString;
+ 				        data[i][2] = etatString;
+ 				        data[i][3] = marqueString;
+ 				       data[i][4] = typeString;
+				        data[i][5] = fournisseurString;
+ 				        i++;
+ 				      }
+
+ 				      DefaultTableModel model = new DefaultTableModel(data, columns);
+ 				   // add header in table model     
+ 				      model.setColumnIdentifiers(columns);
+ 				      JPanel panelListArticles = new JPanel();
+ 						panelListArticles.setBackground(new Color(255, 255, 255));
+ 						panelListArticles.setBounds(407, 147, 865, 382);
+ 						panelProduits.add(panelListArticles);
+
+ 						tableListArticle = new JTable(model);
+ 						tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
+ 						tableListArticle.setShowGrid(true);
+ 						tableListArticle.setShowVerticalLines(true);
+// 						
+ 						panelListArticles.add(new JScrollPane(tableListArticle));
+ 						panelListArticles.setVisible(true);
+
+
+ 				    } catch(SQLException e3) {
+ 				      e3.printStackTrace();
+ 				    }
+ 			}
+ 		});
+ 		btnProduitMisAJours.setBackground(new Color(255, 228, 225));
+ 		btnProduitMisAJours.setBounds(534, 545, 129, 45);
+ 		panelProduits.add(btnProduitMisAJours);
 		
 
 		
