@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -167,7 +169,7 @@ public class NestiStockJava {
         Object[] s1_TypeProduits = new Object[]{"-------","Article", "Ustensile"}; 
 		JComboBox<String> produitTypeComboBox = new JComboBox(s1_TypeProduits);
 		
-		//text field unvisible, just get value
+		//text field invisible, just get value
 		JTextField produitTypeText = new JTextField();
 		produitTypeText.setVisible(false);
 		
@@ -259,7 +261,7 @@ public class NestiStockJava {
 		 */
 		JLabel produitLabel = new JLabel("Cet onglet permet de renseigner des articles/ des utensiles");
 		produitLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-		produitLabel.setBounds(24, 6, 602, 38);
+		produitLabel.setBounds(22, 6, 695, 38);
 		panelProduits.add(produitLabel);
 		JPanel panelRecherche = new JPanel();
 		panelRecherche.setBackground(new Color(255, 255, 255));
@@ -338,8 +340,8 @@ public class NestiStockJava {
 		
 			JButton btnProduitModifier = new JButton("Modifier");
 			btnProduitModifier.setBackground(new Color(255, 228, 225));
-		btnProduitModifier.setBounds(165, 545, 129, 45);
-		panelProduits.add(btnProduitModifier);
+			btnProduitModifier.setBounds(165, 545, 129, 45);
+			panelProduits.add(btnProduitModifier);
 		
 		/**
 		 * btn Delete
@@ -348,7 +350,7 @@ public class NestiStockJava {
 		btnProduitSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int idProduit = 0;
-				// SQL query to delete an article by id ( which was seleted by user)
+				// SQL query to delete an article by id ( which was selected by user)
 				String query = "DELETE FROM `article` WHERE `nom` = " + idProduit;
 				// prepare statement for a query
     			PreparedStatement declaration;
@@ -414,48 +416,47 @@ public class NestiStockJava {
 					tableListArticle.setShowVerticalLines(true);					
 					JScrollPane scrollPane = new JScrollPane(tableListArticle);
 					scrollPane.setBounds(6, 5, 853, 371);
-					scrollPane.setEnabled(false);
 					panelListArticles1.add(scrollPane);
 					// Article List Panel
-	      JPanel panelListArticles = new JPanel();
-	      scrollPane.setRowHeaderView(panelListArticles);
-	      panelListArticles.setBackground(new Color(255, 255, 255));
-	      panelListArticles.setLayout(null);
+				      JPanel panelListArticles = new JPanel();
+				      scrollPane.setRowHeaderView(panelListArticles);
+				      panelListArticles.setBackground(new Color(255, 255, 255));
+				      panelListArticles.setLayout(null);
 					panelListArticles1.setVisible(true);
 			    } catch(SQLException e3) {
 			      e3.printStackTrace();
 			    }
-		
+
 		JButton btnProduitMisAJours = new JButton("Mis à jours");
  		btnProduitMisAJours.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  				try 
  				  { 
  					// Connect DB
- 					MyConnexion.openConnection();
- 				      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
- 				      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
- 				      ResultSet res = declaration.executeQuery(query);
+					MyConnexion.openConnection();
+			      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
+			      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
+			      ResultSet res = declaration.executeQuery(query);
 
- 				      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
- 				      String data[][] = new String[20][6];
+			      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
+			      String data[][] = new String[20][6];
 
- 				      int i = 0;
- 				      while (res.next()) {
- 				        int id_article = res.getInt("id_article");
- 				        String nomString = res.getString("nom");
- 				        String etatString = res.getString("etat");
- 				        String marqueString = res.getString("marque");
- 				        String typeString = res.getString("type");
- 				        String fournisseurString = res.getString("fournisseur");
- 				        data[i][0] = id_article + "";
- 				        data[i][1] = nomString;
- 				        data[i][2] = etatString;
- 				        data[i][3] = marqueString;
- 				        data[i][4] = typeString;
- 				        data[i][5] = fournisseurString;
- 				        i++;
- 				      }
+			      int i = 0;
+			      while (res.next()) {
+			        int id_article = res.getInt("id_article");
+			        String nomString = res.getString("nom");
+			        String etatString = res.getString("etat");
+			        String marqueString = res.getString("marque");
+			        String typeString = res.getString("type");
+			        String fournisseurString = res.getString("fournisseur");
+			        data[i][0] = id_article + "";
+			        data[i][1] = nomString;
+			        data[i][2] = etatString;
+			        data[i][3] = marqueString;
+			        data[i][4] = typeString;
+			        data[i][5] = fournisseurString;
+			        i++;
+			      }
 
  				      	DefaultTableModel model = new DefaultTableModel(data, columns);
  				      	// add header in table model     
@@ -464,13 +465,33 @@ public class NestiStockJava {
  						panelListArticles1.setBackground(new Color(255, 255, 255));
  						panelListArticles1.setBounds(407, 147, 865, 382);
  						panelProduits.add(panelListArticles1);
+ 						panelListArticles1.setLayout(null);
 
  						tableListArticle = new JTable(model);
+ 						tableListArticle.setColumnSelectionAllowed(true);
+ 						tableListArticle.setCellSelectionEnabled(true);
  						//tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
  						//tableListArticle.setShowGrid(true);
  						tableListArticle.setShowVerticalLines(true);					
- 						panelListArticles1.add(new JScrollPane(tableListArticle));
- 						panelListArticles1.setVisible(true);
+ 						JScrollPane scrollPane = new JScrollPane(tableListArticle);
+ 						scrollPane.setBounds(6, 5, 853, 371);
+ 						scrollPane.setEnabled(false);
+ 						panelListArticles1.add(scrollPane);
+ 						// Article List Panel
+			 		      JPanel panelListArticles = new JPanel();
+			 		      scrollPane.setRowHeaderView(panelListArticles);
+			 		      panelListArticles.setBackground(new Color(255, 255, 255));
+			 		      panelListArticles.setLayout(null);
+ 						  panelListArticles1.setVisible(true);
+ 						 
+ 						 // Show date update
+ 						    DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+ 							JLabel datetimeLabel = new JLabel(dtf4.format(LocalDateTime.now()).toString());
+ 							datetimeLabel.setFont(new Font("Ubuntu", Font.PLAIN, 15));
+ 							datetimeLabel.setBounds(24, 6, 602, 38);
+ 							datetimeLabel.setVisible(true);
+ 							panelProduits.add(datetimeLabel);	
+
  				    } catch(SQLException e3) {
  				      e3.printStackTrace();
  				    }
