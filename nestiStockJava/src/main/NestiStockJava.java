@@ -371,61 +371,61 @@ public class NestiStockJava {
 		 * btn Mise à jour
 		 */
 		
-			try 
-			  { 
-				// Connect DB
-					MyConnexion.openConnection();
-			      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
-			      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
-			      ResultSet res = declaration.executeQuery(query);
-
-			      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
-			      String data[][] = new String[20][6];
-
-			      int i = 0;
-			      while (res.next()) {
-			        int id_article = res.getInt("id_article");
-			        String nomString = res.getString("nom");
-			        String etatString = res.getString("etat");
-			        String marqueString = res.getString("marque");
-			        String typeString = res.getString("type");
-			        String fournisseurString = res.getString("fournisseur");
-			        data[i][0] = id_article + "";
-			        data[i][1] = nomString;
-			        data[i][2] = etatString;
-			        data[i][3] = marqueString;
-			        data[i][4] = typeString;
-			        data[i][5] = fournisseurString;
-			        i++;
-			      }
-
-			      	DefaultTableModel model = new DefaultTableModel(data, columns);
-			      	// add header in table model     
-			      	model.setColumnIdentifiers(columns);
-			      	JPanel panelListArticles1 = new JPanel();
-					panelListArticles1.setBackground(new Color(255, 255, 255));
-					panelListArticles1.setBounds(407, 147, 865, 382);
-					panelProduits.add(panelListArticles1);
-					panelListArticles1.setLayout(null);
-
-					tableListArticle = new JTable(model);
-					tableListArticle.setColumnSelectionAllowed(true);
-					tableListArticle.setCellSelectionEnabled(true);
-					//tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
-					//tableListArticle.setShowGrid(true);
-					tableListArticle.setShowVerticalLines(true);					
-					JScrollPane scrollPane = new JScrollPane(tableListArticle);
-					scrollPane.setBounds(6, 5, 853, 371);
-					panelListArticles1.add(scrollPane);
-					// Article List Panel
-				      JPanel panelListArticles = new JPanel();
-				      scrollPane.setRowHeaderView(panelListArticles);
-				      panelListArticles.setBackground(new Color(255, 255, 255));
-				      panelListArticles.setLayout(null);
-					panelListArticles1.setVisible(true);
-			    } catch(SQLException e3) {
-			      e3.printStackTrace();
-			    }
+//			try 
+//			  { 
+//				// Connect DB
+//					MyConnexion.openConnection();
+//			      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
+//			      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
+//			      ResultSet res = declaration.executeQuery(query);
+//
+//			      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
+//			      String data[][] = new String[20][6];
+//
+//			      int i = 0;
+//			      while (res.next()) {
+//			        int id_article = res.getInt("id_article");
+//			        String nomString = res.getString("nom");
+//			        String etatString = res.getString("etat");
+//			        String marqueString = res.getString("marque");
+//			        String typeString = res.getString("type");
+//			        String fournisseurString = res.getString("fournisseur");
+//			        data[i][0] = id_article + "";
+//			        data[i][1] = nomString;
+//			        data[i][2] = etatString;
+//			        data[i][3] = marqueString;
+//			        data[i][4] = typeString;
+//			        data[i][5] = fournisseurString;
+//			        i++;
+//			      }
+//
+//			      	DefaultTableModel model = new DefaultTableModel(data, columns);
+//			      	// add header in table model     
+//			      	model.setColumnIdentifiers(columns);
+//			      	JPanel panelListArticles1 = new JPanel();
+//					panelListArticles1.setBackground(new Color(255, 255, 255));
+//					panelListArticles1.setBounds(407, 147, 865, 382);
+//					panelProduits.add(panelListArticles1);
+//					panelListArticles1.setLayout(null);
+//
+//					tableListArticle = new JTable(model);
+//					tableListArticle.setColumnSelectionAllowed(true);
+//					tableListArticle.setCellSelectionEnabled(true);
+//					//tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
+//					//tableListArticle.setShowGrid(true);
+//					tableListArticle.setShowVerticalLines(true);					
+//					JScrollPane scrollPane = new JScrollPane(tableListArticle);
+//					scrollPane.setBounds(6, 5, 853, 371);
+//					panelListArticles1.add(scrollPane);
+//					// Article List Panel
+//				      JPanel panelListArticles = new JPanel();
+//				      scrollPane.setRowHeaderView(panelListArticles);
+//				      panelListArticles.setBackground(new Color(255, 255, 255));
+//				      panelListArticles.setLayout(null);
+//					panelListArticles1.setVisible(true);
+//			    } catch(SQLException e3) {
+//			      e3.printStackTrace();
+//			    }
 
 		JButton btnProduitMisAJours = new JButton("Mis à jours");
  		btnProduitMisAJours.addActionListener(new ActionListener() {
