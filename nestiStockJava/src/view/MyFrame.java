@@ -14,7 +14,7 @@ public class MyFrame extends JFrame {
 	public MyFrame() {
 
 	JLabel label = new JLabel();
-	label.setBounds(0, 0, 800, 80);
+	label.setBounds(0, 0, 1800, 80);
 	label.setVerticalAlignment(SwingConstants.CENTER);
 	label.setHorizontalAlignment(SwingConstants.CENTER);
 	label.setText("GESTION DE STOCK NESTI"); //set text of label
@@ -25,7 +25,7 @@ public class MyFrame extends JFrame {
 	label.setOpaque(true); //display background color
 	label.setFont(new Font("Rockwell", Font.BOLD, 40));
 			
-	this.setBounds(100, 100, 450, 300); // set (x,y,weight,high) as well as dimension
+	//this.setBounds(100, 100, 450, 300); // set (x,y,weight,high) as well as dimension
 	this.setTitle("nestiStockJava V.1"); // sets title of this
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application
 	this.setResizable(false); // prevent this from being resized
@@ -34,6 +34,7 @@ public class MyFrame extends JFrame {
 	this.getContentPane().setBackground(new Color(0xCDC9C9)); // change color of background
 	this.getContentPane().setLayout(null);
 	this.getContentPane().add(label);
-	
+	// plein ecran
+	this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 }
 }

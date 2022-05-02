@@ -4,6 +4,8 @@ package main;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -97,17 +99,17 @@ public class NestiStockJava {
 	private void initialize() {
 		
 		frame = new MyFrame(); //modify class MyFrame.java if you want
-		
 			/**
 			 * Tab Menu
 			 */
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(169, 126, 1395, 826);
 		tabbedPane.setBackground(new Color(128, 128, 128));
-		tabbedPane.setBounds(0, 115, 800, 657);
 		tabbedPane.setVisible(false);
+		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(tabbedPane);
-		
+
 		
 		JPanel panelProduits = new JPanel();
 		tabbedPane.addTab("Produits", null, panelProduits, "CRUD Produits");
@@ -122,6 +124,7 @@ public class NestiStockJava {
 		panelProduitsSaisir.setBounds(22, 56, 377, 477);
 		panelProduits.add(panelProduitsSaisir);
 		panelProduitsSaisir.setLayout(null);
+		
 //		/**
 //		 * btn Submit
 //		 */
@@ -143,7 +146,7 @@ public class NestiStockJava {
 				produitEtatText.setText(null);
 				//produitDateConsomText.setText(null);
 				produitMarqueText.setText(null);
-				//produitFournisseurText.setText(null);
+				produitFournisseurText.setText(null);
 			}
 			
 		});
@@ -157,10 +160,11 @@ public class NestiStockJava {
 		produitTypeLabel.setBounds(19, 27, 61, 16);
 		panelProduitsSaisir.add(produitTypeLabel);
 		// List of product types 
-		//Indices start at 0 - Article , 1- Ustensile
+		//Indices start at 1 - Article , 2- Ustensile
         Object[] s1_TypeProduits = new Object[]{"-------","Article", "Ustensile"}; 
 		JComboBox<String> produitTypeComboBox = new JComboBox(s1_TypeProduits);
 		
+		//text field unvisible, just get value
 		JTextField produitTypeText = new JTextField();
 		produitTypeText.setVisible(false);
 		
@@ -175,11 +179,6 @@ public class NestiStockJava {
 			
 		});
 		panelProduitsSaisir.add(produitTypeComboBox);
-		
-		
-		//**************************************************//
-		
-		
 		//**************************************************//
 		
 		//**************************************************//
@@ -275,9 +274,10 @@ public class NestiStockJava {
 		btnProduitRecherche.setBackground(new Color(255, 228, 225));
 		panelRecherche.add(btnProduitRecherche);
 		
-//		JComboBox nomColProduitList = new JComboBox();
-//		nomColProduitList.setBounds(6, 9, 127, 28);
-//		panelRecherche.add(nomColProduitList);
+		JLabel produitRechercheLabel = new JLabel("Produit id:");
+		produitRechercheLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		produitRechercheLabel.setBounds(6, 9, 127, 28);
+		panelRecherche.add(produitRechercheLabel);
 		
 		produitSaisirTextRecherche = new JTextField();
 		produitSaisirTextRecherche.setBackground(SystemColor.window);
@@ -291,10 +291,11 @@ public class NestiStockJava {
 		 * btn "Creer" - Produits
 		 */
 		// Article List Panel
-	      JPanel panelListArticles = new JPanel(new BorderLayout());
+	      JPanel panelListArticles = new JPanel();
 			panelListArticles.setBackground(new Color(255, 255, 255));
-			panelListArticles.setBounds(407, 165, 355, 382);
+			panelListArticles.setBounds(407, 147, 865, 382);
 			panelProduits.add(panelListArticles);
+			panelListArticles.setLayout(null);
 			JButton btnProduitCreer = new JButton("Creer");
 			btnProduitCreer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -343,6 +344,7 @@ public class NestiStockJava {
 		btnProduitModifier.setBackground(new Color(255, 228, 225));
 		btnProduitModifier.setBounds(165, 545, 129, 45);
 		panelProduits.add(btnProduitModifier);
+		
 		/**
 		 * btn Delete
 		 */
@@ -369,29 +371,40 @@ public class NestiStockJava {
 		btnProduitSupprimer.setBounds(303, 545, 129, 45);
 		panelProduits.add(btnProduitSupprimer);
 		
-		JButton btnProduitMisAJours = new JButton("Mis à jours");
+		/**
+		 * btn Mise à jour
+		 */
+		JButton btnProduitMisAJours = new JButton("Mise à jour");
 		btnProduitMisAJours.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try 
 				  {	 
-				      // Col's name
-				      String columns[] = { "id_article", "nom", "etat", "marque"};
-				      // Row data
-				      Object[][] data = new Object[10][columns.length];
+				     
 				      // query to get all info from table article
-				      String query = "SELECT `id_article`,`nom`,`etat`,`marque` FROM article";
+				      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
 				      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
 				      ResultSet res = declaration.executeQuery(query);
+				      res.next();
+				      int count = res.getInt("recordCount");
+				      res.close(); 
+				      // Col's name
+				      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
+				      // Row data
+				      Object[][] data = new Object[count][columns.length];
 				      int i = 0;
 				      while (res.next()) {
 				        int id_article = res.getInt("id_article");
+				        String typeString = res.getString("type");
 				        String nomString = res.getString("nom");
 				        String etatString = res.getString("etat");
 				        String marqueString = res.getString("marque");
+				        String fournisseurString = res.getString("fournisseur");
 				        data[i][0] = id_article + "";
-				        data[i][1] = nomString;
-				        data[i][2] = etatString;
-				        data[i][3] = marqueString;
+				        data[i][1] = typeString;
+				        data[i][2] = nomString;
+				        data[i][3] = etatString;
+				        data[i][4] = marqueString;
+				        data[i][5] = fournisseurString;
 				        i++;
 				      }
 				      DefaultTableModel model = new DefaultTableModel(data, columns);
@@ -418,7 +431,7 @@ public class NestiStockJava {
 			}
 		});
 		btnProduitMisAJours.setBackground(new Color(255, 228, 225));
-		btnProduitMisAJours.setBounds(534, 545, 129, 45);
+		btnProduitMisAJours.setBounds(814, 545, 129, 45);
 		panelProduits.add(btnProduitMisAJours);
 		
 
@@ -427,6 +440,8 @@ public class NestiStockJava {
 		listeArticle.setFont(new Font("Ubuntu", Font.PLAIN, 20));
 		listeArticle.setBounds(411, 112, 352, 38);
 		panelProduits.add(listeArticle);
+		
+		
 //		/**
 //		 * Tab Fournisseurs
 //		 */
