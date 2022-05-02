@@ -35,12 +35,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import java.awt.SystemColor;
+import java.awt.Window;
+
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.mysql.cj.xdevapi.DatabaseObject.DbObjectType;
 import com.mysql.cj.xdevapi.PreparableStatement;
+import javax.swing.ScrollPaneConstants;
 
 public class NestiStockJava {
 
@@ -148,8 +151,7 @@ public class NestiStockJava {
 				//produitDateConsomText.setText(null);
 				produitMarqueText.setText(null);
 				produitFournisseurText.setText(null);
-			}
-			
+			}	
 		});
 		btnProduitEffacer.setBackground(new Color(255, 228, 225));
 		btnProduitEffacer.setBounds(201, 430, 117, 29);
@@ -177,7 +179,6 @@ public class NestiStockJava {
 				String s =(String) produitTypeComboBox.getSelectedItem();
 				produitTypeText.setText(s);
 			}
-			
 		});
 		panelProduitsSaisir.add(produitTypeComboBox);
 		//**************************************************//
@@ -282,7 +283,7 @@ public class NestiStockJava {
 		
 		produitSaisirTextRecherche = new JTextField();
 		produitSaisirTextRecherche.setBackground(SystemColor.window);
-		produitSaisirTextRecherche.setBounds(131, 9, 108, 26);
+		produitSaisirTextRecherche.setBounds(112, 9, 127, 26);
 		panelRecherche.add(produitSaisirTextRecherche);
 		produitSaisirTextRecherche.setColumns(10);
 	
@@ -291,12 +292,6 @@ public class NestiStockJava {
 		/**
 		 * btn "Creer" - Produits
 		 */
-		// Article List Panel
-	      JPanel panelListArticles = new JPanel();
-			panelListArticles.setBackground(new Color(255, 255, 255));
-			panelListArticles.setBounds(407, 147, 865, 382);
-			panelProduits.add(panelListArticles);
-			panelListArticles.setLayout(null);
 			JButton btnProduitCreer = new JButton("Creer");
 			btnProduitCreer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -337,12 +332,12 @@ public class NestiStockJava {
 	                }
 			}
 		});
-		btnProduitCreer.setBackground(new Color(255, 228, 225));
-		btnProduitCreer.setBounds(32, 545, 121, 45);
-		panelProduits.add(btnProduitCreer);
+			btnProduitCreer.setBackground(new Color(255, 228, 225));
+			btnProduitCreer.setBounds(32, 545, 121, 45);
+			panelProduits.add(btnProduitCreer);
 		
-		JButton btnProduitModifier = new JButton("Modifier");
-		btnProduitModifier.setBackground(new Color(255, 228, 225));
+			JButton btnProduitModifier = new JButton("Modifier");
+			btnProduitModifier.setBackground(new Color(255, 228, 225));
 		btnProduitModifier.setBounds(165, 545, 129, 45);
 		panelProduits.add(btnProduitModifier);
 		
@@ -369,14 +364,75 @@ public class NestiStockJava {
 		btnProduitSupprimer.setBounds(303, 545, 129, 45);
 		panelProduits.add(btnProduitSupprimer);
 		
+		
 		/**
 		 * btn Mise à jour
 		 */
+		
+			try 
+			  { 
+				// Connect DB
+					MyConnexion.openConnection();
+			      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
+			      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
+			      ResultSet res = declaration.executeQuery(query);
+
+			      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
+			      String data[][] = new String[20][6];
+
+			      int i = 0;
+			      while (res.next()) {
+			        int id_article = res.getInt("id_article");
+			        String nomString = res.getString("nom");
+			        String etatString = res.getString("etat");
+			        String marqueString = res.getString("marque");
+			        String typeString = res.getString("type");
+			        String fournisseurString = res.getString("fournisseur");
+			        data[i][0] = id_article + "";
+			        data[i][1] = nomString;
+			        data[i][2] = etatString;
+			        data[i][3] = marqueString;
+			        data[i][4] = typeString;
+			        data[i][5] = fournisseurString;
+			        i++;
+			      }
+
+			      	DefaultTableModel model = new DefaultTableModel(data, columns);
+			      	// add header in table model     
+			      	model.setColumnIdentifiers(columns);
+			      	JPanel panelListArticles1 = new JPanel();
+					panelListArticles1.setBackground(new Color(255, 255, 255));
+					panelListArticles1.setBounds(407, 147, 865, 382);
+					panelProduits.add(panelListArticles1);
+					panelListArticles1.setLayout(null);
+
+					tableListArticle = new JTable(model);
+					tableListArticle.setColumnSelectionAllowed(true);
+					tableListArticle.setCellSelectionEnabled(true);
+					//tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
+					//tableListArticle.setShowGrid(true);
+					tableListArticle.setShowVerticalLines(true);					
+					JScrollPane scrollPane = new JScrollPane(tableListArticle);
+					scrollPane.setBounds(6, 5, 853, 371);
+					scrollPane.setEnabled(false);
+					panelListArticles1.add(scrollPane);
+					// Article List Panel
+	      JPanel panelListArticles = new JPanel();
+	      scrollPane.setRowHeaderView(panelListArticles);
+	      panelListArticles.setBackground(new Color(255, 255, 255));
+	      panelListArticles.setLayout(null);
+					panelListArticles1.setVisible(true);
+			    } catch(SQLException e3) {
+			      e3.printStackTrace();
+			    }
+		
 		JButton btnProduitMisAJours = new JButton("Mis à jours");
  		btnProduitMisAJours.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  				try 
- 				  {
+ 				  { 
+ 					// Connect DB
+ 					MyConnexion.openConnection();
  				      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
  				      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
  				      ResultSet res = declaration.executeQuery(query);
@@ -390,41 +446,38 @@ public class NestiStockJava {
  				        String nomString = res.getString("nom");
  				        String etatString = res.getString("etat");
  				        String marqueString = res.getString("marque");
- 				       String typeString = res.getString("type");
- 				      String fournisseurString = res.getString("fournisseur");
+ 				        String typeString = res.getString("type");
+ 				        String fournisseurString = res.getString("fournisseur");
  				        data[i][0] = id_article + "";
  				        data[i][1] = nomString;
  				        data[i][2] = etatString;
  				        data[i][3] = marqueString;
- 				       data[i][4] = typeString;
-				        data[i][5] = fournisseurString;
+ 				        data[i][4] = typeString;
+ 				        data[i][5] = fournisseurString;
  				        i++;
  				      }
 
- 				      DefaultTableModel model = new DefaultTableModel(data, columns);
- 				   // add header in table model     
- 				      model.setColumnIdentifiers(columns);
- 				      JPanel panelListArticles = new JPanel();
- 						panelListArticles.setBackground(new Color(255, 255, 255));
- 						panelListArticles.setBounds(407, 147, 865, 382);
- 						panelProduits.add(panelListArticles);
+ 				      	DefaultTableModel model = new DefaultTableModel(data, columns);
+ 				      	// add header in table model     
+ 				      	model.setColumnIdentifiers(columns);
+ 				      	JPanel panelListArticles1 = new JPanel();
+ 						panelListArticles1.setBackground(new Color(255, 255, 255));
+ 						panelListArticles1.setBounds(407, 147, 865, 382);
+ 						panelProduits.add(panelListArticles1);
 
  						tableListArticle = new JTable(model);
- 						tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
- 						tableListArticle.setShowGrid(true);
- 						tableListArticle.setShowVerticalLines(true);
-// 						
- 						panelListArticles.add(new JScrollPane(tableListArticle));
- 						panelListArticles.setVisible(true);
-
-
+ 						//tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
+ 						//tableListArticle.setShowGrid(true);
+ 						tableListArticle.setShowVerticalLines(true);					
+ 						panelListArticles1.add(new JScrollPane(tableListArticle));
+ 						panelListArticles1.setVisible(true);
  				    } catch(SQLException e3) {
  				      e3.printStackTrace();
  				    }
- 			}
+			}
  		});
  		btnProduitMisAJours.setBackground(new Color(255, 228, 225));
- 		btnProduitMisAJours.setBounds(534, 545, 129, 45);
+ 		btnProduitMisAJours.setBounds(793, 541, 129, 45);
  		panelProduits.add(btnProduitMisAJours);
 		
 
