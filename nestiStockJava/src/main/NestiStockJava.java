@@ -1,51 +1,46 @@
 package main;
-
+//ctrl+shift+C : commentaire
 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
+import java.lang.System.Logger;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+//import java.time.LocalDateTime;
+//import java.time.format.DateTimeFormatter;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
 
 import service.LoginDialog;
 import service.MyConnexion;
 import view.MyFrame;
 
-import javax.swing.JLayeredPane;
-import javax.swing.JToolBar;
+
 import javax.swing.JButton;
-import javax.swing.JDesktopPane;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
 import javax.swing.JComboBox;
 import java.awt.SystemColor;
-import java.awt.Window;
 
 import javax.swing.JTable;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.mysql.cj.xdevapi.DatabaseObject.DbObjectType;
-import com.mysql.cj.xdevapi.PreparableStatement;
-import javax.swing.ScrollPaneConstants;
+
+
 
 public class NestiStockJava {
 
@@ -58,15 +53,20 @@ public class NestiStockJava {
 	private JTextField produitFournisseurText;
 	private JTable tableListArticle;
 	private JTextField produitSaisirTextRecherche;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField txtFNomEntreprise;
+	private JTextField txtFAdresse;
+	private JTextField txtFNomContact;
+	private JTextField txtFPrenomContact;
+	private JTextField txtFTelephone;
+	private JTextField txtFArticles;
 	private JTextField textField_6;
 	private JTable table;
-
+	private JComboBox<String> produitIdRecherche;
+	
+//	Connection con;
+//	PreparedStatement pst;
+//	ResultSet rs;
+	
 	/**
 	 * Launch the application.
 	 * 
@@ -93,6 +93,7 @@ public class NestiStockJava {
 	 */
 	public NestiStockJava() {
 		initialize();
+	
 	}
 	
 
@@ -105,21 +106,66 @@ public class NestiStockJava {
 	private void initialize() {
 		
 		frame = new MyFrame(); //modify class MyFrame.java if you want
-			/**
-			 * Tab Menu
-			 */
-		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(169, 126, 1395, 826);
-		tabbedPane.setBackground(new Color(128, 128, 128));
-		tabbedPane.setVisible(false);
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(tabbedPane);
 
+//		/**
+//		 * Tab Menu
+//		 */
+	
+	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	tabbedPane.setBounds(169, 126, 1395, 826);
+	tabbedPane.setBackground(new Color(128, 128, 128));
+	tabbedPane.setVisible(false);
+	frame.getContentPane().setLayout(null);
+	frame.getContentPane().add(tabbedPane);
+
+	
+	JPanel panelProduits = new JPanel();
+	tabbedPane.addTab("Produits", null, panelProduits, "CRUD Produits");
+	panelProduits.setLayout(null);
+	
+//		//**************************************************//
+//		//**************************************************//
 		
-		JPanel panelProduits = new JPanel();
-		tabbedPane.addTab("Produits", null, panelProduits, "CRUD Produits");
-		panelProduits.setLayout(null);
+		
+		/**
+		 * btn login - logout
+		 */
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setBounds(598, 85, 104, 29);
+		frame.getContentPane().add(btnLogin);
+		btnLogin.addActionListener(
+                new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        LoginDialog loginDlg = new LoginDialog(frame);
+                        loginDlg.setVisible(true);
+                        // if login successfully
+                        if(loginDlg.isSucceeded()){
+                            btnLogin.setText("Hi " + loginDlg.getUsername() + "!");
+                            MyConnexion.openConnection();
+                            MyConnexion.testConnection();
+                            // display All tabs
+                            tabbedPane.setVisible(true);
+                        }
+                    }
+                });
+		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.setBounds(694, 85, 97, 29);
+		frame.getContentPane().add(btnLogout);
+			btnLogout.addActionListener(
+                new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                    	//This just terminates the program.
+                    	//System.exit(0);
+                        // display All tabs
+                        tabbedPane.setVisible(false);
+                        btnLogin.setText("Login");
+                    }
+                });
+
+//		//**************************************************//
+//		//**************************************************//
+
 		
 		/**
 		 * Tab Produits
@@ -132,7 +178,7 @@ public class NestiStockJava {
 		panelProduitsSaisir.setLayout(null);
 		
 //		/**
-//		 * btn Submit
+//		 * btn Submit PAS BESOIN
 //		 */
 //		JButton btnProduitSubmit = new JButton("Submit");
 //		btnProduitSubmit.setBackground(new Color(255, 228, 225));
@@ -142,6 +188,9 @@ public class NestiStockJava {
 //		});
 //		btnProduitSubmit.setBounds(49, 430, 117, 29);
 //		panelProduitsSaisir.add(btnProduitSubmit);
+		
+//		//**************************************************//
+//		//**************************************************//
 		/**
 		 * btn Effacer
 		 */
@@ -158,15 +207,16 @@ public class NestiStockJava {
 		btnProduitEffacer.setBackground(new Color(255, 228, 225));
 		btnProduitEffacer.setBounds(201, 430, 117, 29);
 		panelProduitsSaisir.add(btnProduitEffacer);
-
 //		//**************************************************//
+//		//**************************************************//
+		
 		// Label Type
 		JLabel produitTypeLabel = new JLabel("Type");
 		produitTypeLabel.setBounds(19, 27, 61, 16);
 		panelProduitsSaisir.add(produitTypeLabel);
 		// List of product types 
 		//Indices start at 1 - Article , 2- Ustensile
-        Object[] s1_TypeProduits = new Object[]{"-------","Article", "Ustensile"}; 
+        Object[] s1_TypeProduits = new Object[]{"-------","Ingrédient", "Ustensile"}; 
 		JComboBox<String> produitTypeComboBox = new JComboBox(s1_TypeProduits);
 		
 		//text field invisible, just get value
@@ -184,7 +234,6 @@ public class NestiStockJava {
 		});
 		panelProduitsSaisir.add(produitTypeComboBox);
 		//**************************************************//
-		
 		//**************************************************//
 		// Label Nom
 		JLabel produitNom = new JLabel("Nom");
@@ -259,10 +308,6 @@ public class NestiStockJava {
 		/**
 		 * Tab Recherche
 		 */
-		JLabel produitLabel = new JLabel("Cet onglet permet de renseigner des articles/ des utensiles");
-		produitLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-		produitLabel.setBounds(22, 6, 695, 38);
-		panelProduits.add(produitLabel);
 		JPanel panelRecherche = new JPanel();
 		panelRecherche.setBackground(new Color(255, 255, 255));
 		panelRecherche.setBounds(411, 56, 351, 45);
@@ -283,14 +328,28 @@ public class NestiStockJava {
 		produitRechercheLabel.setBounds(6, 9, 127, 28);
 		panelRecherche.add(produitRechercheLabel);
 		
-		produitSaisirTextRecherche = new JTextField();
-		produitSaisirTextRecherche.setBackground(SystemColor.window);
-		produitSaisirTextRecherche.setBounds(112, 9, 127, 26);
-		panelRecherche.add(produitSaisirTextRecherche);
-		produitSaisirTextRecherche.setColumns(10);
-	
+		//**************************************************//
+				
+		// add vao List choisir
+
+		JComboBox <String> produitIdRecherche = new JComboBox();
 		
+		//text field invisible, just get value
+		JTextField produitFIdText = new JTextField();
+		produitFIdText.setVisible(false);
 		
+		produitIdRecherche.addActionListener(produitIdRecherche);
+		produitIdRecherche.setBounds(154, 23, 217, 30);
+		produitIdRecherche.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				e.getSource();
+				String s =(String) produitIdRecherche.getSelectedItem();
+				produitFIdText.setText(s);
+			}
+		});
+		produitIdRecherche.setBounds(113, 10, 127, 27);
+		panelRecherche.add(produitIdRecherche);
+
 		/**
 		 * btn "Creer" - Produits
 		 */
@@ -307,7 +366,7 @@ public class NestiStockJava {
 	                try {
 	        			// query to insert your info into table article
 	        			//String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) VALUES(?,?,?)";
-	        			//String query = "INSERT INTO `article` (`nom`,`etat`,`marque`,) values('" + pnomString + "','" + pEtatString + "','" + pMarqueString + "')";
+	        			
 	        			String query = "INSERT INTO `article` (`type`,`nom`,`etat`,`marque`,`fournisseur`) values('" +ptypeString+ "','" + pnomString + "','" + pEtatString + "','" + pMarqueString + "','" + pfournisseurString+ "')";
 	        			// prepare statement for a query
 	        			PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
@@ -316,6 +375,8 @@ public class NestiStockJava {
 	        			//declaration.setString(3, pMarqueString);
 	    				//declaration.setString(4, pDateConsomString);
 	    				//declaration.setString(5, pFournisseurString);
+	        			
+	        			// notice dialog box to show : success or not 
 	                    int x = declaration.executeUpdate(query);
 	                    if (x == 0) {
 	                        JOptionPane.showMessageDialog(btnProduitCreer,"Please check your information");
@@ -370,62 +431,13 @@ public class NestiStockJava {
 		/**
 		 * btn Mise à jour
 		 */
+      	JPanel panelListArticles2 = new JPanel();
+		panelListArticles2.setBackground(new Color(255, 255, 255));
+		panelListArticles2.setBounds(411, 143, 911, 384);
+		panelProduits.add(panelListArticles2);
+		panelListArticles2.setVisible(true);
 		
-//			try 
-//			  { 
-//				// Connect DB
-//					MyConnexion.openConnection();
-//			      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
-//			      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
-//			      ResultSet res = declaration.executeQuery(query);
-//
-//			      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
-//			      String data[][] = new String[20][6];
-//
-//			      int i = 0;
-//			      while (res.next()) {
-//			        int id_article = res.getInt("id_article");
-//			        String nomString = res.getString("nom");
-//			        String etatString = res.getString("etat");
-//			        String marqueString = res.getString("marque");
-//			        String typeString = res.getString("type");
-//			        String fournisseurString = res.getString("fournisseur");
-//			        data[i][0] = id_article + "";
-//			        data[i][1] = nomString;
-//			        data[i][2] = etatString;
-//			        data[i][3] = marqueString;
-//			        data[i][4] = typeString;
-//			        data[i][5] = fournisseurString;
-//			        i++;
-//			      }
-//
-//			      	DefaultTableModel model = new DefaultTableModel(data, columns);
-//			      	// add header in table model     
-//			      	model.setColumnIdentifiers(columns);
-//			      	JPanel panelListArticles1 = new JPanel();
-//					panelListArticles1.setBackground(new Color(255, 255, 255));
-//					panelListArticles1.setBounds(407, 147, 865, 382);
-//					panelProduits.add(panelListArticles1);
-//					panelListArticles1.setLayout(null);
-//
-//					tableListArticle = new JTable(model);
-//					tableListArticle.setColumnSelectionAllowed(true);
-//					tableListArticle.setCellSelectionEnabled(true);
-//					//tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
-//					//tableListArticle.setShowGrid(true);
-//					tableListArticle.setShowVerticalLines(true);					
-//					JScrollPane scrollPane = new JScrollPane(tableListArticle);
-//					scrollPane.setBounds(6, 5, 853, 371);
-//					panelListArticles1.add(scrollPane);
-//					// Article List Panel
-//				      JPanel panelListArticles = new JPanel();
-//				      scrollPane.setRowHeaderView(panelListArticles);
-//				      panelListArticles.setBackground(new Color(255, 255, 255));
-//				      panelListArticles.setLayout(null);
-//					panelListArticles1.setVisible(true);
-//			    } catch(SQLException e3) {
-//			      e3.printStackTrace();
-//			    }
+
 
 		JButton btnProduitMisAJours = new JButton("Mis à jours");
  		btnProduitMisAJours.addActionListener(new ActionListener() {
@@ -463,18 +475,16 @@ public class NestiStockJava {
  				      	model.setColumnIdentifiers(columns);
  				      	JPanel panelListArticles1 = new JPanel();
  						panelListArticles1.setBackground(new Color(255, 255, 255));
- 						panelListArticles1.setBounds(407, 147, 865, 382);
+ 						panelListArticles1.setBounds(411, 143, 911, 384);
  						panelProduits.add(panelListArticles1);
  						panelListArticles1.setLayout(null);
 
  						tableListArticle = new JTable(model);
  						tableListArticle.setColumnSelectionAllowed(true);
  						tableListArticle.setCellSelectionEnabled(true);
- 						//tableListArticle.setBorder(new LineBorder(SystemColor.activeCaptionText));
- 						//tableListArticle.setShowGrid(true);
  						tableListArticle.setShowVerticalLines(true);					
  						JScrollPane scrollPane = new JScrollPane(tableListArticle);
- 						scrollPane.setBounds(6, 5, 853, 371);
+ 						scrollPane.setBounds(6, 5, 911, 384);
  						scrollPane.setEnabled(false);
  						panelListArticles1.add(scrollPane);
  						// Article List Panel
@@ -484,14 +494,6 @@ public class NestiStockJava {
 			 		      panelListArticles.setLayout(null);
  						  panelListArticles1.setVisible(true);
  						 
- 						 // Show date update
- 						    DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
- 							JLabel datetimeLabel = new JLabel(dtf4.format(LocalDateTime.now()).toString());
- 							datetimeLabel.setFont(new Font("Ubuntu", Font.PLAIN, 15));
- 							datetimeLabel.setBounds(24, 6, 602, 38);
- 							datetimeLabel.setVisible(true);
- 							panelProduits.add(datetimeLabel);	
-
  				    } catch(SQLException e3) {
  				      e3.printStackTrace();
  				    }
@@ -500,14 +502,25 @@ public class NestiStockJava {
  		btnProduitMisAJours.setBackground(new Color(255, 228, 225));
  		btnProduitMisAJours.setBounds(793, 541, 129, 45);
  		panelProduits.add(btnProduitMisAJours);
-		
 
-		
+ 		/**
+ 		 * title 
+ 		 */
 		JLabel listeArticle = new JLabel("Liste d'articles");
 		listeArticle.setFont(new Font("Ubuntu", Font.PLAIN, 20));
 		listeArticle.setBounds(411, 112, 352, 38);
 		panelProduits.add(listeArticle);
+		JLabel produitLabel = new JLabel("Cet onglet permet de renseigner des articles/ des utensiles");
+		produitLabel.setBounds(22, 6, 695, 38);
+		panelProduits.add(produitLabel);
+		produitLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
 		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(238, 238, 238));
+		panel.setBounds(411, 143, 911, 384);
+		panelProduits.add(panel);
+		//**************************************************//
+		//**************************************************//
 		
 //		/**
 //		 * Tab Fournisseurs
@@ -561,49 +574,54 @@ public class NestiStockJava {
 //		fournisseurArticle.setBounds(22, 342, 97, 16);
 //		panelFournisseursSaisir.add(fournisseurArticle);
 //		
-//		textField = new JTextField();
-//		fournisseurNomEntreprise.setLabelFor(textField);
-//		textField.setColumns(10);
-//		textField.setBackground(SystemColor.window);
-//		textField.setBounds(168, 68, 203, 26);
-//		panelFournisseursSaisir.add(textField);
+//		txtFNomEntreprise = new JTextField();
+//		fournisseurNomEntreprise.setLabelFor(txtFNomEntreprise);
+//		txtFNomEntreprise.setColumns(10);
+//		txtFNomEntreprise.setBackground(SystemColor.window);
+//		txtFNomEntreprise.setBounds(168, 68, 203, 26);
+//		panelFournisseursSaisir.add(txtFNomEntreprise);
 //		
-//		textField_1 = new JTextField();
-//		fournisseurAdresse.setLabelFor(textField_1);
-//		textField_1.setColumns(10);
-//		textField_1.setBackground(SystemColor.window);
-//		textField_1.setBounds(168, 122, 203, 26);
-//		panelFournisseursSaisir.add(textField_1);
+//		txtFAdresse = new JTextField();
+//		fournisseurAdresse.setLabelFor(txtFAdresse);
+//		txtFAdresse.setColumns(10);
+//		txtFAdresse.setBackground(SystemColor.window);
+//		txtFAdresse.setBounds(168, 122, 203, 26);
+//		panelFournisseursSaisir.add(txtFAdresse);
 //		
-//		textField_2 = new JTextField();
-//		fournisseurNom.setLabelFor(textField_2);
-//		textField_2.setColumns(10);
-//		textField_2.setBackground(SystemColor.window);
-//		textField_2.setBounds(168, 175, 203, 26);
-//		panelFournisseursSaisir.add(textField_2);
+//		txtFNomContact = new JTextField();
+//		fournisseurNom.setLabelFor(txtFNomContact);
+//		txtFNomContact.setColumns(10);
+//		txtFNomContact.setBackground(SystemColor.window);
+//		txtFNomContact.setBounds(168, 175, 203, 26);
+//		panelFournisseursSaisir.add(txtFNomContact);
 //		
-//		textField_3 = new JTextField();
-//		fournisseurPrenom.setLabelFor(textField_3);
-//		textField_3.setColumns(10);
-//		textField_3.setBackground(SystemColor.window);
-//		textField_3.setBounds(168, 228, 203, 26);
-//		panelFournisseursSaisir.add(textField_3);
+//		txtFPrenomContact = new JTextField();
+//		fournisseurPrenom.setLabelFor(txtFPrenomContact);
+//		txtFPrenomContact.setColumns(10);
+//		txtFPrenomContact.setBackground(SystemColor.window);
+//		txtFPrenomContact.setBounds(168, 228, 203, 26);
+//		panelFournisseursSaisir.add(txtFPrenomContact);
 //		
-//		textField_4 = new JTextField();
-//		fournisseurTelephone.setLabelFor(textField_4);
-//		textField_4.setColumns(10);
-//		textField_4.setBackground(SystemColor.window);
-//		textField_4.setBounds(168, 280, 203, 26);
-//		panelFournisseursSaisir.add(textField_4);
+//		txtFTelephone = new JTextField();
+//		fournisseurTelephone.setLabelFor(txtFTelephone);
+//		txtFTelephone.setColumns(10);
+//		txtFTelephone.setBackground(SystemColor.window);
+//		txtFTelephone.setBounds(168, 280, 203, 26);
+//		panelFournisseursSaisir.add(txtFTelephone);
 //		
-//		textField_5 = new JTextField();
-//		fournisseurArticle.setLabelFor(textField_5);
-//		textField_5.setColumns(10);
-//		textField_5.setBackground(SystemColor.window);
-//		textField_5.setBounds(168, 337, 203, 26);
-//		panelFournisseursSaisir.add(textField_5);
+//		txtFArticles = new JTextField();
+//		fournisseurArticle.setLabelFor(txtFArticles);
+//		txtFArticles.setColumns(10);
+//		txtFArticles.setBackground(SystemColor.window);
+//		txtFArticles.setBounds(168, 337, 203, 26);
+//		panelFournisseursSaisir.add(txtFArticles);
 //		
 //		JButton btnFournisseursCreer = new JButton("Creer");
+//		btnFournisseursCreer.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			
+//			}
+//		});
 //		btnFournisseursCreer.setBackground(new Color(255, 228, 225));
 //		btnFournisseursCreer.setBounds(32, 533, 121, 45);
 //		panelFournisseurs.add(btnFournisseursCreer);
@@ -660,6 +678,9 @@ public class NestiStockJava {
 //		table.setBounds(177, 5, 0, 0);
 //		table.setBorder(new LineBorder(SystemColor.activeCaptionText));
 //		panelListFournisseurs.add(table);
+
+//		//**************************************************//
+//		//**************************************************//
 //		/**
 //		 * Tab Commandes
 //		 */
@@ -671,43 +692,8 @@ public class NestiStockJava {
 //		CommandesLabel.setBounds(6, 6, 456, 24);
 //		panelCommandes.add(CommandesLabel);
 //		CommandesLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-		
-		/**
-		 * btn login - logout
-		 */
-		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(598, 85, 104, 29);
-		frame.getContentPane().add(btnLogin);
-		btnLogin.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                        LoginDialog loginDlg = new LoginDialog(frame);
-                        loginDlg.setVisible(true);
-                        // if login successfully
-                        if(loginDlg.isSucceeded()){
-                            btnLogin.setText("Hi " + loginDlg.getUsername() + "!");
-                            MyConnexion.openConnection();
-                            MyConnexion.testConnection();
-                            // display All tabs
-                            tabbedPane.setVisible(true);
-                        }
-                    }
-                });
-		
-		JButton btnLogout = new JButton("Logout");
-		btnLogout.setBounds(694, 85, 97, 29);
-		frame.getContentPane().add(btnLogout);
-			btnLogout.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                    	//This just terminates the program.
-                    	//System.exit(0);
-                        // display All tabs
-                        tabbedPane.setVisible(false);
-                        btnLogin.setText("Login");
-                    }
-                });
-	
+
+
 			
 		// // JOptionPane = pop up a standard dialog box that prompts users for a value or informs them of something
 			//			JOptionPane.showMessageDialog(null, "This is some useless info","NestiStockJava",JOptionPane.PLAIN_MESSAGE);
@@ -721,5 +707,20 @@ public class NestiStockJava {
 //						System.out.println(answer);
 			
 					
-	}
-}
+	}  // close initialize()
+	
+//	public void LoadProductNo() {
+//		try {
+//			pst = con.prepareStatement("SELECT id_article FROM `article`");
+//			rs = pst.executeQuery();
+//			produitIdRecherche.removeAllItems();
+//			while(rs.next()) {
+//				produitIdRecherche.addItem(rs.getString(1));
+//			};
+//		} catch (Exception e) {
+//			
+//		}
+//	}
+	
+} //close Class
+
