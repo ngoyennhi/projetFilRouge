@@ -314,14 +314,14 @@ public class NestiStockJava {
 		panelProduits.add(panelRecherche);
 		panelRecherche.setLayout(null);
 		
-		JButton btnProduitRecherche = new JButton("Recherche");
-		btnProduitRecherche.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnProduitRecherche.setBounds(243, 9, 108, 29);
-		btnProduitRecherche.setBackground(new Color(255, 228, 225));
-		panelRecherche.add(btnProduitRecherche);
+//		JButton btnProduitRecherche = new JButton("Recherche");
+//		btnProduitRecherche.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			}
+//		});
+//		btnProduitRecherche.setBounds(243, 9, 108, 29);
+//		btnProduitRecherche.setBackground(new Color(255, 228, 225));
+//		panelRecherche.add(btnProduitRecherche);
 		
 		JLabel produitRechercheLabel = new JLabel("Produit id:");
 		produitRechercheLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
@@ -329,26 +329,13 @@ public class NestiStockJava {
 		panelRecherche.add(produitRechercheLabel);
 		
 		//**************************************************//
-				
-		// add vao List choisir
 
-		JComboBox <String> produitIdRecherche = new JComboBox();
 		
 		//text field invisible, just get value
 		JTextField produitFIdText = new JTextField();
-		produitFIdText.setVisible(false);
-		
-		produitIdRecherche.addActionListener(produitIdRecherche);
-		produitIdRecherche.setBounds(154, 23, 217, 30);
-		produitIdRecherche.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				e.getSource();
-				String s =(String) produitIdRecherche.getSelectedItem();
-				produitFIdText.setText(s);
-			}
-		});
-		produitIdRecherche.setBounds(113, 10, 127, 27);
-		panelRecherche.add(produitIdRecherche);
+		produitFIdText.setVisible(true);
+		produitFIdText.setBounds(113, 10, 127, 27);
+		panelRecherche.add(produitFIdText);
 
 		/**
 		 * btn "Creer" - Produits
@@ -365,7 +352,7 @@ public class NestiStockJava {
 
 	                try {
 	        			// query to insert your info into table article
-	        			//String query = "INSERT INTO `article` (`nom`,`etat`,`marque`) VALUES(?,?,?)";
+	        			//String query = "INSERT INTO `article` (`type`,`nom`,`etat`,`marque`,`fournisseur`) VALUES(?,?,?,?,?)";
 	        			
 	        			String query = "INSERT INTO `article` (`type`,`nom`,`etat`,`marque`,`fournisseur`) values('" +ptypeString+ "','" + pnomString + "','" + pEtatString + "','" + pMarqueString + "','" + pfournisseurString+ "')";
 	        			// prepare statement for a query
@@ -410,14 +397,25 @@ public class NestiStockJava {
 		JButton btnProduitSupprimer = new JButton("Supprimer");
 		btnProduitSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int idProduit = 0;
+				
+				//Converting String into int using Integer.parseInt()  
+				int idProduit = Integer.parseInt(produitFIdText.getText());
+
 				// SQL query to delete an article by id ( which was selected by user)
-				String query = "DELETE FROM `article` WHERE `nom` = " + idProduit;
+				String query = "DELETE FROM `article` WHERE `id_article` = " + idProduit;
 				// prepare statement for a query
     			PreparedStatement declaration;
 				try {
 					declaration = MyConnexion.accessDataBase.prepareStatement(query);
-					declaration.executeUpdate(query);} 
+					declaration.executeUpdate(query);
+                    JOptionPane.showMessageDialog(btnProduitCreer,"Produit is sucessfully deleted");
+                   //clear Text
+                    produitNomText.setText(null);
+    				produitEtatText.setText(null);
+    				produitFIdText.setText(null);
+    				produitMarqueText.setText(null);
+    				produitFournisseurText.setText(null);
+				} 
 				catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -440,6 +438,62 @@ public class NestiStockJava {
 
 
 		JButton btnProduitMisAJours = new JButton("Mis à jours");
+		try 
+		  { 
+			// Connect DB
+		MyConnexion.openConnection();
+	      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
+	      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
+	      ResultSet res = declaration.executeQuery(query);
+
+	      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
+	      String data[][] = new String[20][6];
+
+	      int i = 0;
+	      while (res.next()) {
+	        int id_article = res.getInt("id_article");
+	        String nomString = res.getString("nom");
+	        String etatString = res.getString("etat");
+	        String marqueString = res.getString("marque");
+	        String typeString = res.getString("type");
+	        String fournisseurString = res.getString("fournisseur");
+	        data[i][0] = id_article + "";
+	        data[i][1] = nomString;
+	        data[i][2] = etatString;
+	        data[i][3] = marqueString;
+	        data[i][4] = typeString;
+	        data[i][5] = fournisseurString;
+	        i++;
+	      }
+
+		      	DefaultTableModel model = new DefaultTableModel(data, columns);
+		      	// add header in table model     
+		      	model.setColumnIdentifiers(columns);
+		      	JPanel panelListArticles1 = new JPanel();
+				panelListArticles1.setBackground(new Color(255, 255, 255));
+				panelListArticles1.setBounds(411, 143, 911, 384);
+				panelProduits.add(panelListArticles1);
+				panelListArticles1.setLayout(null);
+
+				tableListArticle = new JTable(model);
+				//tableListArticle.setColumnSelectionAllowed(true);
+				//tableListArticle.setCellSelectionEnabled(true);
+				tableListArticle.setRowSelectionAllowed(true);
+				tableListArticle.setShowVerticalLines(true);					
+				JScrollPane scrollPane = new JScrollPane(tableListArticle);
+				scrollPane.setBounds(6, 5, 911, 384);
+				scrollPane.setEnabled(false);
+				panelListArticles1.add(scrollPane);
+				// Article List Panel
+	 		      JPanel panelListArticles = new JPanel();
+	 		      scrollPane.setRowHeaderView(panelListArticles);
+	 		      panelListArticles.setBackground(new Color(255, 255, 255));
+	 		      panelListArticles.setLayout(null);
+				  panelListArticles1.setVisible(true);
+				 
+		    } catch(SQLException e3) {
+		      e3.printStackTrace();
+		    }
  		btnProduitMisAJours.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  				try 
@@ -480,8 +534,9 @@ public class NestiStockJava {
  						panelListArticles1.setLayout(null);
 
  						tableListArticle = new JTable(model);
- 						tableListArticle.setColumnSelectionAllowed(true);
- 						tableListArticle.setCellSelectionEnabled(true);
+ 						//tableListArticle.setColumnSelectionAllowed(true);
+ 						//tableListArticle.setCellSelectionEnabled(true);
+ 						tableListArticle.setRowSelectionAllowed(true);
  						tableListArticle.setShowVerticalLines(true);					
  						JScrollPane scrollPane = new JScrollPane(tableListArticle);
  						scrollPane.setBounds(6, 5, 911, 384);
