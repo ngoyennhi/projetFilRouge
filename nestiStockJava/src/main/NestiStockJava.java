@@ -59,7 +59,7 @@ public class NestiStockJava {
 	private JTextField txtFPrenomContact;
 	private JTextField txtFTelephone;
 	private JTextField txtFArticles;
-	private JTextField textField_6;
+	private JTextField fournisseurFIdText;
 	private JTable table;
 	private JComboBox<String> produitIdRecherche;
 	
@@ -785,15 +785,41 @@ public class NestiStockJava {
 		btnFournisseursModifier.setBounds(165, 533, 129, 45);
 		panelFournisseurs.add(btnFournisseursModifier);
 //		//**************************************************//
-//		JButton btnFournisseursSupprimer = new JButton("Supprimer");
-//		btnFournisseursSupprimer.setBackground(new Color(255, 228, 225));
-//		btnFournisseursSupprimer.setBounds(324, 533, 129, 45);
-//		panelFournisseurs.add(btnFournisseursSupprimer);
+		JButton btnFournisseursSupprimer = new JButton("Supprimer");
+		btnFournisseursSupprimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Converting String into int using Integer.parseInt()  
+				int idFournisseur = Integer.parseInt(fournisseurFIdText.getText());
+				// SQL query to delete an article by id ( which was selected by user)
+				String query = "DELETE FROM `fournisseur` WHERE `id_fournisseur` = " + idFournisseur;
+				// prepare statement for a query
+    			PreparedStatement declaration;
+				try {
+					declaration = MyConnexion.accessDataBase.prepareStatement(query);
+					int executeUpdateRS = declaration.executeUpdate(query);
+					System.out.println(executeUpdateRS);
+					if(executeUpdateRS == 0) { JOptionPane.showMessageDialog(btnFournisseursSupprimer,"Fournisseur is not exit");}
+					else { JOptionPane.showMessageDialog(btnFournisseursSupprimer,"Fournisseur is sucessfully deleted");} 
+				}
+				catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				//clear Text
+				txtFNomEntreprise.setText(null);
+				txtFAdresse.setText(null);
+				txtFNomContact.setText(null);
+				txtFPrenomContact.setText(null);
+				txtFTelephone.setText(null);
+			}
+		});
+		btnFournisseursSupprimer.setBackground(new Color(255, 228, 225));
+		btnFournisseursSupprimer.setBounds(324, 533, 129, 45);
+		panelFournisseurs.add(btnFournisseursSupprimer);
 //		//**************************************************//
-//		JButton btnFournisseursMisAJours = new JButton("Mis à jours");
-//		btnFournisseursMisAJours.setBackground(new Color(255, 228, 225));
-//		btnFournisseursMisAJours.setBounds(538, 529, 129, 45);
-//		panelFournisseurs.add(btnFournisseursMisAJours);
+		JButton btnFournisseursMisAJours = new JButton("Mis à jours");
+		btnFournisseursMisAJours.setBackground(new Color(255, 228, 225));
+		btnFournisseursMisAJours.setBounds(538, 529, 129, 45);
+		panelFournisseurs.add(btnFournisseursMisAJours);
 //		//**************************************************//
 		JLabel lblListeDfournisseurs = new JLabel("Liste de fournisseurs");
 		lblListeDfournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
@@ -805,18 +831,18 @@ public class NestiStockJava {
 		panelFournisseurRecherche_1.setBackground(Color.WHITE);
 		panelFournisseurRecherche_1.setBounds(418, 44, 351, 45);
 		panelFournisseurs.add(panelFournisseurRecherche_1);
-//		
+
 //		JButton btnFournisseurRecherche_1 = new JButton("Recherche");
 //		btnFournisseurRecherche_1.setBackground(new Color(255, 228, 225));
 //		btnFournisseurRecherche_1.setBounds(243, 9, 108, 29);
 //		panelFournisseurRecherche_1.add(btnFournisseurRecherche_1);
 		//text to write out id
-		textField_6 = new JTextField();
-		textField_6.setToolTipText("Saisir Text");
-		textField_6.setColumns(10);
-		textField_6.setBackground(SystemColor.window);
-		textField_6.setBounds(99, 9, 140, 26);
-		panelFournisseurRecherche_1.add(textField_6);
+		fournisseurFIdText = new JTextField();
+		fournisseurFIdText.setToolTipText("Saisir Text");
+		fournisseurFIdText.setColumns(10);
+		fournisseurFIdText.setBackground(SystemColor.window);
+		fournisseurFIdText.setBounds(99, 9, 140, 26);
+		panelFournisseurRecherche_1.add(fournisseurFIdText);
 		
 		JPanel panelListFournisseurs = new JPanel();
 		panelListFournisseurs.setBackground(Color.WHITE);
