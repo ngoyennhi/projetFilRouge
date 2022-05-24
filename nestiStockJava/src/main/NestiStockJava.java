@@ -757,9 +757,10 @@ public class NestiStockJava {
 				String txtFTelephoneString = txtFTelephone.getText();
 				
 				//Converting String into int using Integer.parseInt()  
-				int idProduit = Integer.parseInt(produitFIdText.getText());
+				int idFournisseur = Integer.parseInt(fournisseurFIdText.getText());
 				// query SQL
-				String query = "UPDATE `article` SET `nomEntreprise`= '" + txtFNomEntrepriseString +  "', `adresse`= '" + txtFAdresseString + "', `nomContact`= '" + txtFNomContactString+"', `prenomContact`= '" + txtFPrenomContactString + "', `telephone`= '" + txtFTelephoneString + "' WHERE `id_fournisseur` = " + idProduit;
+				String query = "UPDATE `fournisseur` SET `nomEntreprise`= '" + txtFNomEntrepriseString +  "', `adresse`= '" + txtFAdresseString + "', `nomContact`= '" + txtFNomContactString+"', `prenomContact`= '" + txtFPrenomContactString + "', `telephone`= '" + txtFTelephoneString + "' WHERE `id_fournisseur` = " + idFournisseur;
+			
 				PreparedStatement declaration;
 				try {
 					declaration = MyConnexion.accessDataBase.prepareStatement(query);
@@ -768,7 +769,7 @@ public class NestiStockJava {
                     if (x == 0) {
                         JOptionPane.showMessageDialog(btnFournisseursModifier,"Please check your information");
                     } else {
-                        JOptionPane.showMessageDialog(btnFournisseursModifier,"Produit is sucessfully modified");
+                        JOptionPane.showMessageDialog(btnFournisseursModifier,"Fournisseur is sucessfully modified");
                         //clear Text
                     		txtFNomEntreprise.setText(null);
             				txtFAdresse.setText(null);
@@ -813,7 +814,7 @@ public class NestiStockJava {
 			}
 		});
 		btnFournisseursSupprimer.setBackground(new Color(255, 228, 225));
-		btnFournisseursSupprimer.setBounds(324, 533, 129, 45);
+		btnFournisseursSupprimer.setBounds(306, 533, 129, 45);
 		panelFournisseurs.add(btnFournisseursSupprimer);
 //		//**************************************************//
 		JButton btnFournisseursMisAJours = new JButton("Mis à jours");
@@ -841,8 +842,13 @@ public class NestiStockJava {
 		fournisseurFIdText.setToolTipText("Saisir Text");
 		fournisseurFIdText.setColumns(10);
 		fournisseurFIdText.setBackground(SystemColor.window);
-		fournisseurFIdText.setBounds(99, 9, 140, 26);
+		fournisseurFIdText.setBounds(140, 6, 140, 26);
 		panelFournisseurRecherche_1.add(fournisseurFIdText);
+		
+		JLabel jLabelFournisseurFId = new JLabel("Fournisseur Id : ");
+		jLabelFournisseurFId.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		jLabelFournisseurFId.setBounds(16, 11, 117, 16);
+		panelFournisseurRecherche_1.add(jLabelFournisseurFId);
 		
 		JPanel panelListFournisseurs = new JPanel();
 		panelListFournisseurs.setBackground(Color.WHITE);
@@ -865,6 +871,5 @@ public class NestiStockJava {
 //		CommandesLabel.setFont(new Font("Ubuntu", Font.PLAIN, 20));
 				
 	}  // close initialize()
-	
 } //close Class
 
