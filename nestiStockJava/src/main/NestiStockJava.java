@@ -701,7 +701,7 @@ public class NestiStockJava {
 			}	
 		});
 		btnFournisseursEffacer.setBackground(new Color(255, 228, 225));
-		btnFournisseursEffacer.setBounds(201, 430, 117, 29);
+		btnFournisseursEffacer.setBounds(181, 414, 137, 45);
 		panelFournisseursSaisir.add(btnFournisseursEffacer);
 		
 		//**************************************************//
@@ -714,7 +714,7 @@ public class NestiStockJava {
 				String txtFNomContactString = txtFNomContact.getText();
 				String txtFPrenomContactString = txtFPrenomContact.getText();
 				String txtFTelephoneString = txtFTelephone.getText();
-				//id_fournisseur
+				
                 try {
         			
         			String query = "INSERT INTO `fournisseur` (`nomEntreprise`,`adresse`,`nomContact`,`prenomContact`,`telephone`) values('" +txtFNomEntrepriseString+ "','" + txtFAdresseString + "','" + txtFNomContactString + "','" + txtFPrenomContactString + "','" + txtFTelephoneString + "')";
@@ -745,60 +745,85 @@ public class NestiStockJava {
 		panelFournisseurs.add(btnFournisseursCreer);
 		
 		//**************************************************//
-//		
-//		JButton btnFournisseursModifier = new JButton("Modifier");
-//		btnFournisseursModifier.setBackground(new Color(255, 228, 225));
-//		btnFournisseursModifier.setBounds(176, 534, 129, 45);
-//		panelFournisseurs.add(btnFournisseursModifier);
-//		
+		
+		JButton btnFournisseursModifier = new JButton("Modifier");
+		btnFournisseursModifier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				String txtFNomEntrepriseString = txtFNomEntreprise.getText();
+				String txtFAdresseString = txtFAdresse.getText();
+				String txtFNomContactString = txtFNomContact.getText();
+				String txtFPrenomContactString = txtFPrenomContact.getText();
+				String txtFTelephoneString = txtFTelephone.getText();
+				
+				//Converting String into int using Integer.parseInt()  
+				int idProduit = Integer.parseInt(produitFIdText.getText());
+				// query SQL
+				String query = "UPDATE `article` SET `nomEntreprise`= '" + txtFNomEntrepriseString +  "', `adresse`= '" + txtFAdresseString + "', `nomContact`= '" + txtFNomContactString+"', `prenomContact`= '" + txtFPrenomContactString + "', `telephone`= '" + txtFTelephoneString + "' WHERE `id_fournisseur` = " + idProduit;
+				PreparedStatement declaration;
+				try {
+					declaration = MyConnexion.accessDataBase.prepareStatement(query);
+					// notice dialog box to show : success or not 
+                    int x = declaration.executeUpdate(query);
+                    if (x == 0) {
+                        JOptionPane.showMessageDialog(btnFournisseursModifier,"Please check your information");
+                    } else {
+                        JOptionPane.showMessageDialog(btnFournisseursModifier,"Produit is sucessfully modified");
+                        //clear Text
+                    		txtFNomEntreprise.setText(null);
+            				txtFAdresse.setText(null);
+            				txtFNomContact.setText(null);
+            				txtFPrenomContact.setText(null);
+            				txtFTelephone.setText(null);
+                    }
+				} catch (Exception exception) {
+				    exception.printStackTrace();
+				}
+			}
+		});
+		btnFournisseursModifier.setBackground(new Color(255, 228, 225));
+		btnFournisseursModifier.setBounds(165, 533, 129, 45);
+		panelFournisseurs.add(btnFournisseursModifier);
+//		//**************************************************//
 //		JButton btnFournisseursSupprimer = new JButton("Supprimer");
 //		btnFournisseursSupprimer.setBackground(new Color(255, 228, 225));
 //		btnFournisseursSupprimer.setBounds(324, 533, 129, 45);
 //		panelFournisseurs.add(btnFournisseursSupprimer);
-//		
+//		//**************************************************//
 //		JButton btnFournisseursMisAJours = new JButton("Mis à jours");
 //		btnFournisseursMisAJours.setBackground(new Color(255, 228, 225));
 //		btnFournisseursMisAJours.setBounds(538, 529, 129, 45);
 //		panelFournisseurs.add(btnFournisseursMisAJours);
-//		
-//		JLabel lblListeDfournisseurs = new JLabel("Liste d'fournisseurs");
-//		lblListeDfournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
-//		lblListeDfournisseurs.setBounds(417, 89, 352, 38);
-//		panelFournisseurs.add(lblListeDfournisseurs);
-//		
-//		JPanel panelFournisseurRecherche_1 = new JPanel();
-//		panelFournisseurRecherche_1.setLayout(null);
-//		panelFournisseurRecherche_1.setBackground(Color.WHITE);
-//		panelFournisseurRecherche_1.setBounds(418, 44, 351, 45);
-//		panelFournisseurs.add(panelFournisseurRecherche_1);
+//		//**************************************************//
+		JLabel lblListeDfournisseurs = new JLabel("Liste de fournisseurs");
+		lblListeDfournisseurs.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		lblListeDfournisseurs.setBounds(417, 89, 352, 38);
+		panelFournisseurs.add(lblListeDfournisseurs);
+
+		JPanel panelFournisseurRecherche_1 = new JPanel();
+		panelFournisseurRecherche_1.setLayout(null);
+		panelFournisseurRecherche_1.setBackground(Color.WHITE);
+		panelFournisseurRecherche_1.setBounds(418, 44, 351, 45);
+		panelFournisseurs.add(panelFournisseurRecherche_1);
 //		
 //		JButton btnFournisseurRecherche_1 = new JButton("Recherche");
 //		btnFournisseurRecherche_1.setBackground(new Color(255, 228, 225));
 //		btnFournisseurRecherche_1.setBounds(243, 9, 108, 29);
 //		panelFournisseurRecherche_1.add(btnFournisseurRecherche_1);
-//		
-//		textField_6 = new JTextField();
-//		textField_6.setToolTipText("Saisir Text");
-//		textField_6.setColumns(10);
-//		textField_6.setBackground(SystemColor.window);
-//		textField_6.setBounds(131, 9, 108, 26);
-//		panelFournisseurRecherche_1.add(textField_6);
-//		
-////		JComboBox comboBox_1 = new JComboBox();
-////		comboBox_1.setBounds(6, 10, 125, 29);
-////		panelRecherche_1.add(comboBox_1);
-//		
-//		JPanel panelListFournisseurs = new JPanel();
-//		panelListFournisseurs.setBackground(Color.WHITE);
-//		panelListFournisseurs.setBounds(417, 121, 355, 382);
-//		panelFournisseurs.add(panelListFournisseurs);
-//		panelListFournisseurs.setLayout(null);
-//		
-//		table = new JTable();
-//		table.setBounds(177, 5, 0, 0);
-//		table.setBorder(new LineBorder(SystemColor.activeCaptionText));
-//		panelListFournisseurs.add(table);
-
+		//text to write out id
+		textField_6 = new JTextField();
+		textField_6.setToolTipText("Saisir Text");
+		textField_6.setColumns(10);
+		textField_6.setBackground(SystemColor.window);
+		textField_6.setBounds(99, 9, 140, 26);
+		panelFournisseurRecherche_1.add(textField_6);
+		
+		JPanel panelListFournisseurs = new JPanel();
+		panelListFournisseurs.setBackground(Color.WHITE);
+		panelListFournisseurs.setBounds(417, 121, 881, 400);
+		panelFournisseurs.add(panelListFournisseurs);
+		panelListFournisseurs.setLayout(null);
+		
 //		//**************************************************//
 //		//**************************************************//
 //		/**
