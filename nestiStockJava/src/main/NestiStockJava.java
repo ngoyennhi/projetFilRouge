@@ -335,7 +335,6 @@ public class NestiStockJava {
 					String pMarqueString = 	produitMarqueText.getText();
 					String pfournisseurString = produitFournisseurText.getText();
 					//String pDateConsomString = produitDateConsomText.getText();
-
 	                try {
 	        			// query to insert your info into table article
 	        			//String query = "INSERT INTO `article` (`type`,`nom`,`etat`,`marque`,`fournisseur`) VALUES(?,?,?,?,?)";
@@ -395,9 +394,9 @@ public class NestiStockJava {
 						// notice dialog box to show : success or not 
 	                    int x = declaration.executeUpdate(query);
 	                    if (x == 0) {
-	                        JOptionPane.showMessageDialog(btnProduitCreer,"Please check your information");
+	                        JOptionPane.showMessageDialog(btnProduitModifier,"Please check your information");
 	                    } else {
-	                        JOptionPane.showMessageDialog(btnProduitCreer,"Produit is sucessfully modified");
+	                        JOptionPane.showMessageDialog(btnProduitModifier,"Produit is sucessfully modified");
 	                       //clear Text
 	                        produitNomText.setText(null);
 	        				produitEtatText.setText(null);
@@ -435,8 +434,8 @@ public class NestiStockJava {
 					declaration = MyConnexion.accessDataBase.prepareStatement(query);
 					int executeUpdateRS = declaration.executeUpdate(query);
 					System.out.println(executeUpdateRS);
-					if(executeUpdateRS == 0) { JOptionPane.showMessageDialog(btnProduitCreer,"Produit is not exit");}
-					else { JOptionPane.showMessageDialog(btnProduitCreer,"Produit is sucessfully deleted");} 
+					if(executeUpdateRS == 0) { JOptionPane.showMessageDialog(btnProduitSupprimer,"Produit is not exit");}
+					else { JOptionPane.showMessageDialog(btnProduitSupprimer,"Produit is sucessfully deleted");} 
 				}
 				catch (SQLException e1) {
 					e1.printStackTrace();
@@ -705,17 +704,47 @@ public class NestiStockJava {
 		btnFournisseursEffacer.setBounds(201, 430, 117, 29);
 		panelFournisseursSaisir.add(btnFournisseursEffacer);
 		
+		//**************************************************//
 		
+		JButton btnFournisseursCreer = new JButton("Creer");
+		btnFournisseursCreer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String txtFNomEntrepriseString = txtFNomEntreprise.getText();
+				String txtFAdresseString = txtFAdresse.getText();
+				String txtFNomContactString = txtFNomContact.getText();
+				String txtFPrenomContactString = txtFPrenomContact.getText();
+				String txtFTelephoneString = txtFTelephone.getText();
+				//id_fournisseur
+                try {
+        			
+        			String query = "INSERT INTO `fournisseur` (`nomEntreprise`,`adresse`,`nomContact`,`prenomContact`,`telephone`) values('" +txtFNomEntrepriseString+ "','" + txtFAdresseString + "','" + txtFNomContactString + "','" + txtFPrenomContactString + "','" + txtFTelephoneString + "')";
+        			// prepare statement for a query
+        			PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
+
+        			// notice dialog box to show : success or not 
+                    int x = declaration.executeUpdate(query);
+                    if (x == 0) {
+                        JOptionPane.showMessageDialog(btnFournisseursCreer,"Please check your information");
+                    } else {
+                        JOptionPane.showMessageDialog(btnFournisseursCreer,"Produit is sucessfully created");
+                       //clear Text
+                		txtFNomEntreprise.setText(null);
+        				txtFAdresse.setText(null);
+        				txtFNomContact.setText(null);
+        				txtFPrenomContact.setText(null);
+        				txtFTelephone.setText(null);
+                    }
+                    
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+			}
+		});
+		btnFournisseursCreer.setBackground(new Color(255, 228, 225));
+		btnFournisseursCreer.setBounds(32, 533, 121, 45);
+		panelFournisseurs.add(btnFournisseursCreer);
 		
-//		JButton btnFournisseursCreer = new JButton("Creer");
-//		btnFournisseursCreer.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//			
-//			}
-//		});
-//		btnFournisseursCreer.setBackground(new Color(255, 228, 225));
-//		btnFournisseursCreer.setBounds(32, 533, 121, 45);
-//		panelFournisseurs.add(btnFournisseursCreer);
+		//**************************************************//
 //		
 //		JButton btnFournisseursModifier = new JButton("Modifier");
 //		btnFournisseursModifier.setBackground(new Color(255, 228, 225));
