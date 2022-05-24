@@ -329,14 +329,12 @@ public class NestiStockJava {
 		panelRecherche.add(produitRechercheLabel);
 		
 		//**************************************************//
-
-		
-		//text field invisible, just get value
+		//text field to get id
 		JTextField produitFIdText = new JTextField();
 		produitFIdText.setVisible(true);
 		produitFIdText.setBounds(113, 10, 127, 27);
 		panelRecherche.add(produitFIdText);
-
+		//**************************************************//
 		/**
 		 * btn "Creer" - Produits
 		 */
@@ -357,11 +355,11 @@ public class NestiStockJava {
 	        			String query = "INSERT INTO `article` (`type`,`nom`,`etat`,`marque`,`fournisseur`) values('" +ptypeString+ "','" + pnomString + "','" + pEtatString + "','" + pMarqueString + "','" + pfournisseurString+ "')";
 	        			// prepare statement for a query
 	        			PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
-	        			//declaration.setString(1, pnomString);
-	        			//declaration.setString(2, pEtatString);
-	        			//declaration.setString(3, pMarqueString);
-	    				//declaration.setString(4, pDateConsomString);
-	    				//declaration.setString(5, pFournisseurString);
+	        			//declaration.setString(1, ptypeString);
+	        			//declaration.setString(2, pnomString);
+	        			//declaration.setString(3, pEtatString);
+	    				//declaration.setString(4, pMarqueString);
+	    				//declaration.setString(5, pfournisseurString);
 	        			
 	        			// notice dialog box to show : success or not 
 	                    int x = declaration.executeUpdate(query);
@@ -385,12 +383,55 @@ public class NestiStockJava {
 			btnProduitCreer.setBackground(new Color(255, 228, 225));
 			btnProduitCreer.setBounds(32, 545, 121, 45);
 			panelProduits.add(btnProduitCreer);
-		
+			
+			//**************************************************//
+			/**
+			 * btn Modifier
+			 */
 			JButton btnProduitModifier = new JButton("Modifier");
+			btnProduitModifier.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					String ptypeString = produitTypeText.getText();
+					String pnomString =	produitNomText.getText();
+					String pEtatString = produitEtatText.getText();
+					String pMarqueString = 	produitMarqueText.getText();
+					String pfournisseurString = produitFournisseurText.getText();
+					//Converting String into int using Integer.parseInt()  
+					int idProduit = Integer.parseInt(produitFIdText.getText());
+					// query SQL
+					String query = "UPDATE `article` SET `type`= '" + ptypeString +  "', `nom`= '" + pnomString + "', `etat`= '" + pEtatString+"', `marque`= '" + pMarqueString + "', `fournisseur`= '" + pfournisseurString + "' WHERE `id_article` = " + idProduit;
+					PreparedStatement declaration;
+					try {
+						declaration = MyConnexion.accessDataBase.prepareStatement(query);
+						// notice dialog box to show : success or not 
+	                    int x = declaration.executeUpdate(query);
+	                    if (x == 0) {
+	                        JOptionPane.showMessageDialog(btnProduitCreer,"Please check your information");
+	                    } else {
+	                        JOptionPane.showMessageDialog(btnProduitCreer,"Produit is sucessfully modified");
+	                       //clear Text
+	                        produitNomText.setText(null);
+	        				produitEtatText.setText(null);
+	        				//produitDateConsomText.setText(null);
+	        				produitMarqueText.setText(null);
+	        				produitFournisseurText.setText(null);
+	                    }
+					} catch (Exception exception) {
+					    exception.printStackTrace();
+					}
+			
+
+				}
+			});
 			btnProduitModifier.setBackground(new Color(255, 228, 225));
 			btnProduitModifier.setBounds(165, 545, 129, 45);
 			panelProduits.add(btnProduitModifier);
-		
+
+			
+		//**************************************************//
+			
+
 		/**
 		 * btn Delete
 		 */
@@ -400,32 +441,33 @@ public class NestiStockJava {
 				
 				//Converting String into int using Integer.parseInt()  
 				int idProduit = Integer.parseInt(produitFIdText.getText());
-
 				// SQL query to delete an article by id ( which was selected by user)
 				String query = "DELETE FROM `article` WHERE `id_article` = " + idProduit;
 				// prepare statement for a query
     			PreparedStatement declaration;
 				try {
 					declaration = MyConnexion.accessDataBase.prepareStatement(query);
-					declaration.executeUpdate(query);
-                    JOptionPane.showMessageDialog(btnProduitCreer,"Produit is sucessfully deleted");
-                   //clear Text
-                    produitNomText.setText(null);
-    				produitEtatText.setText(null);
-    				produitFIdText.setText(null);
-    				produitMarqueText.setText(null);
-    				produitFournisseurText.setText(null);
-				} 
+					int executeUpdateRS = declaration.executeUpdate(query);
+					System.out.println(executeUpdateRS);
+					if(executeUpdateRS == 0) { JOptionPane.showMessageDialog(btnProduitCreer,"Produit is not exit");}
+					else { JOptionPane.showMessageDialog(btnProduitCreer,"Produit is sucessfully deleted");} 
+				}
 				catch (SQLException e1) {
 					e1.printStackTrace();
 				}
+				//clear Text
+                produitNomText.setText(null);
+				produitEtatText.setText(null);
+				produitFIdText.setText(null);
+				produitMarqueText.setText(null);
+				produitFournisseurText.setText(null);
+				};
 			}
-		});
+		);
 		btnProduitSupprimer.setBackground(new Color(255, 228, 225));
 		btnProduitSupprimer.setBounds(303, 545, 129, 45);
 		panelProduits.add(btnProduitSupprimer);
-		
-		
+
 		/**
 		 * btn Mise à jour
 		 */
@@ -441,7 +483,7 @@ public class NestiStockJava {
 		try 
 		  { 
 			// Connect DB
-		MyConnexion.openConnection();
+			MyConnexion.openConnection();
 	      String query = "SELECT `id_article`,`type`,`nom`,`etat`,`marque`,`fournisseur` FROM article";
 	      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
 	      ResultSet res = declaration.executeQuery(query);
