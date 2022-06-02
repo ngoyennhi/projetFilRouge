@@ -817,7 +817,75 @@ public class NestiStockJava {
 		btnFournisseursSupprimer.setBounds(306, 533, 129, 45);
 		panelFournisseurs.add(btnFournisseursSupprimer);
 //		//**************************************************//
+		JPanel panelListFournisseurs = new JPanel();
+		panelListFournisseurs.setBackground(Color.WHITE);
+		panelListFournisseurs.setBounds(417, 121, 881, 400);
+		panelFournisseurs.add(panelListFournisseurs);
+		panelListFournisseurs.setLayout(null);
+		
 		JButton btnFournisseursMisAJours = new JButton("Mis à jours");
+		btnFournisseursMisAJours.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try 
+				  { 
+					// Connect DB
+					MyConnexion.openConnection();
+			      String query = "SELECT `id_fournisseur`, `nomEntreprise`,`adresse`,`nomContact`,`prenomContact`,`telephone` FROM `fournisseur`";
+			      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
+			      ResultSet res = declaration.executeQuery(query);
+			      String columns[] = {  "id_fournisseur","nomEntreprise","adresse","nomContact","prenomContact","telephone"};
+			      String data[][] = new String[20][6];
+
+			      int i = 0;
+			      while (res.next()) {
+			    	String idFournisseurString = res.getString("id_fournisseur");
+			        String nomEntrepriseString = res.getString("nomEntreprise");
+			        String adresseString = res.getString("adresse");
+			        String nomContactString = res.getString("nomContact");
+			        String prenomContactString = res.getString("prenomContact");
+			        String telephoneString = res.getString("telephone");
+			       
+			        data[i][0] = idFournisseurString + "";
+			        data[i][1] = nomEntrepriseString;
+			        data[i][2] = adresseString;
+			        data[i][3] = nomContactString;
+			        data[i][4] = prenomContactString;
+			        data[i][5] = telephoneString;
+			        i++;
+			      }
+
+			      DefaultTableModel model = new DefaultTableModel(data, columns);
+			      	// add header in table model     
+			      	model.setColumnIdentifiers(columns);
+			      	JPanel panelListArticles1 = new JPanel();
+					panelListArticles1.setBackground(new Color(255, 255, 255));
+					panelListArticles1.setBounds(417, 121, 881, 400);
+					panelListFournisseurs.add(panelListArticles1);
+					
+
+					tableListArticle = new JTable(model);
+					//tableListArticle.setColumnSelectionAllowed(true);
+					//tableListArticle.setCellSelectionEnabled(true);
+					tableListArticle.setRowSelectionAllowed(true);
+					tableListArticle.setShowVerticalLines(true);					
+					JScrollPane scrollPane = new JScrollPane(tableListArticle);
+					scrollPane.setBounds(6, 5, 881, 400);
+					scrollPane.setEnabled(false);
+					panelListFournisseurs.add(scrollPane);
+					
+					// Fournisseur List Panel
+		 		      JPanel panelListArticles = new JPanel();
+		 		      scrollPane.setRowHeaderView(panelListArticles);
+		 		      panelListArticles.setBackground(new Color(255, 255, 255));
+		 		      panelListArticles.setLayout(null);
+					  panelListArticles1.setVisible(true);
+					  panelListFournisseurs.add(panelListArticles1);
+						 
+				    } catch(SQLException e3) {
+				      e3.printStackTrace();
+				    }
+			}
+		});
 		btnFournisseursMisAJours.setBackground(new Color(255, 228, 225));
 		btnFournisseursMisAJours.setBounds(538, 529, 129, 45);
 		panelFournisseurs.add(btnFournisseursMisAJours);
@@ -837,6 +905,7 @@ public class NestiStockJava {
 //		btnFournisseurRecherche_1.setBackground(new Color(255, 228, 225));
 //		btnFournisseurRecherche_1.setBounds(243, 9, 108, 29);
 //		panelFournisseurRecherche_1.add(btnFournisseurRecherche_1);
+
 		//text to write out id
 		fournisseurFIdText = new JTextField();
 		fournisseurFIdText.setToolTipText("Saisir Text");
@@ -850,11 +919,7 @@ public class NestiStockJava {
 		jLabelFournisseurFId.setBounds(16, 11, 117, 16);
 		panelFournisseurRecherche_1.add(jLabelFournisseurFId);
 		
-		JPanel panelListFournisseurs = new JPanel();
-		panelListFournisseurs.setBackground(Color.WHITE);
-		panelListFournisseurs.setBounds(417, 121, 881, 400);
-		panelFournisseurs.add(panelListFournisseurs);
-		panelListFournisseurs.setLayout(null);
+	
 		
 //		//**************************************************//
 //		//**************************************************//
