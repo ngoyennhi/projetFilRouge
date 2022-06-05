@@ -473,7 +473,7 @@ public class NestiStockJava {
 	      PreparedStatement declaration = MyConnexion.accessDataBase.prepareStatement(query);
 	      ResultSet res = declaration.executeQuery(query);
 
-	      String columns[] = { "id_article","type", "nom", "etat", "marque","fournisseur"};
+	      String columns[] = { "id_article","type", "etat", "nom" ,"marque","fournisseur"};
 	      String data[][] = new String[20][6];
 
 	      int i = 0;

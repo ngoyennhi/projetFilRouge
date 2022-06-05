@@ -13,7 +13,15 @@ public class Article {
 	private int lot_ref_commande;
 	private int utilisateur_id_utilisateur1;
 	
-    public Article(int id_article,String nom,String etat,String marque, Date date_creation,int prix_article_id_prix, int lot_ref_commande,int utilisateur_id_utilisateur1) {
+    public Article(
+    		int id_article,
+    		String nom,
+    		String etat,
+    		String marque, 
+    		Date date_creation,
+    		int prix_article_id_prix, 
+    		int lot_ref_commande,
+    		int utilisateur_id_utilisateur1) {
     	this.id_article=id_article;
     	this.nom=nom;
     	this.etat=etat;
